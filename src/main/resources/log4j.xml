@@ -80,7 +80,7 @@
         <param name="Subject" value="log4j-error" />
         <param name="To" value="suos@youyuan.com" />
         <param name="SMTPUsername" value="suos@tech.youyuan.com" />
-        <param name="SMTPPassword" value="SONGsuo198833" />
+        <param name="SMTPPassword" value="SONG" />
         <!-- <param name="SMTPDebug" value="false" /> -->
         <layout class="org.apache.log4j.PatternLayout">
             <param name="ConversionPattern"
@@ -99,7 +99,7 @@
         <param name="Subject" value="log4j-error" />
         <param name="To" value="suos@tech.youyuan.com" />
         <param name="SMTPUsername" value="bugs@bjfengteng.com" />
-        <param name="SMTPPassword" value="fengteng2017@,." />
+        <param name="SMTPPassword" value="fen" />
         <!-- <param name="SMTPDebug" value="false" /> -->
         <layout class="org.apache.log4j.PatternLayout">
             <param name="ConversionPattern"
