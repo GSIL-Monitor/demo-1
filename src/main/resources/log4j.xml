@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE log4j:configuration SYSTEM "log4j.dtd">
+<log4j:configuration xmlns:log4j="http://jakarta.apache.org/log4j/">
+
+    <!-- 将日志信息输出到控制台 -->
+    <appender name="ConsoleAppender" class="org.apache.log4j.ConsoleAppender">
+        <!-- 设置日志输出的样式 -->
+        <layout class="org.apache.log4j.PatternLayout">
+            <!-- 设置日志输出的格式 -->
+            <param name="ConversionPattern" value="[%d{yyyy-MM-dd HH:mm:ss:SSS}] [%-5p] [method:%l]%n%m%n%n" />
+        </layout>
+        <!--过滤器设置输出的级别-->
+        <filter class="org.apache.log4j.varia.LevelRangeFilter">
+            <!-- 设置日志输出的最小级别 -->
+            <param name="levelMin" value="Debug" />
+            <!-- 设置日志输出的最大级别 -->
+            <param name="levelMax" value="ERROR" />
+            <!-- 设置日志输出的xxx，默认是false -->
+            <param name="AcceptOnMatch" value="true" />
+        </filter>
+    </appender>
+
+
+    <!-- 将日志信息输出到文件，可以配置多久产生一个新的日志信息文件 -->
+    <appender name="DailyRollingFileAppender" class="org.apache.log4j.DailyRollingFileAppender">
+        <!-- 设置日志信息输出文件全路径名 -->
+        <param name="File" value="/Users/peter/suosong/log4j/DailyRollingFileAppender.log" />
+        <!-- 设置日志每分钟回滚一次，即产生一个新的日志文件 -->
+        <param name="DatePattern" value="'.'yyyy-MM-dd-HH-mm'.log'" />
+        <!-- 设置日志输出的样式 -->
+        <layout class="org.apache.log4j.PatternLayout">
+            <!-- 设置日志输出的格式 -->
+            <param name="ConversionPattern" value="[%d{yyyy-MM-dd HH:mm:ss:SSS}] [%-5p] [method:%l]%n%m%n%n" />
+        </layout>
+    </appender>
+
+
+    <!--
+     注意：
+     1：当additivity="false"时，root中的配置就失灵了，不遵循缺省的继承机制
+     2：logger中的name非常重要，它代表记录器的包的形式，有一定的包含关系，试验表明
+        2-1：当定义的logger的name同名时，只有最后的那一个才能正确的打印日志
+        2-2：当对应的logger含有包含关系时，比如：name=test.log4j.test8 和 name=test.log4j.test8.UseLog4j，则2-1的情况是一样的
+        2-3：logger的name表示所有的包含在此名的所有记录器都遵循同样的配置，name的值中的包含关系是指记录器的名称哟！注意啦！
+     3：logger中定义的level和appender中的filter定义的level的区间取交集
+     4：如果appender中的filter定义的 levelMin > levelMax ，则打印不出日志信息
+     -->
+
+    <!-- 指定logger的设置，additivity指示是否遵循缺省的继承机制,默认是true。继承机制，指的是继承root跟父包的配置-->
+    <logger name="com.example.other" additivity="false">
+        <level value ="debug"/>
+        <appender-ref ref="DailyRollingFileAppender"/>
+    </logger>
+
+
+    <!-- 根logger的设置-->
+    <root>
+        <level value ="INFO"/>
+        <appender-ref ref="ConsoleAppender"/>
+        <!--<appender-ref ref="DailyRollingFileAppender"/>-->
+    </root>
+
+
+
+    <!--
+
+    发邮件设置
+
+
+    -->
+
+    <appender name="mail.MAIL"
+              class="org.apache.log4j.net.SMTPAppender">
+        <param name="threshold" value="error" />
+        <!-- 缓存文件大小，日志达到0K时发送Email,单位k -->
+        <param name="BufferSize" value="0" />
+        <param name="From" value="suos@tech.youyuan.com" />
+        <param name="SMTPHost" value="smtp.exmail.qq.com" />
+        <param name="SMTPPort" value="465" />
+        <param name="Subject" value="log4j-error" />
+        <param name="To" value="suos@youyuan.com" />
+        <param name="SMTPUsername" value="suos@tech.youyuan.com" />
+        <param name="SMTPPassword" value="SONGsuo198833" />
+        <!-- <param name="SMTPDebug" value="false" /> -->
+        <layout class="org.apache.log4j.PatternLayout">
+            <param name="ConversionPattern"
+                   value="[framework]%d - %c -%-4r[%t]%-5p %c %x -%m%n" />
+        </layout>
+    </appender>
+
+    <appender name="mail"
+              class="org.apache.log4j.net.SMTPAppender">
+        <param name="threshold" value="error" />
+        <!-- 缓存文件大小，日志达到0K时发送Email,单位k -->
+        <param name="BufferSize" value="0" />
+        <param name="From" value="bugs@bjfengteng.com" />
+        <param name="SMTPHost" value="smtp.qiye.163.com" />
+        <param name="SMTPPort" value="465" />
+        <param name="Subject" value="log4j-error" />
+        <param name="To" value="suos@tech.youyuan.com" />
+        <param name="SMTPUsername" value="bugs@bjfengteng.com" />
+        <param name="SMTPPassword" value="fengteng2017@,." />
+        <!-- <param name="SMTPDebug" value="false" /> -->
+        <layout class="org.apache.log4j.PatternLayout">
+            <param name="ConversionPattern"
+                   value="[framework]%d - %c -%-4r[%t]%-5p %c %x -%m%n" />
+        </layout>
+    </appender>
+
+    <!-- 发邮件 -->
+    <logger name="com.example.other.test02" additivity="false">
+        <level value="error" />
+        <appender-ref ref="mail" />
+    </logger>
+
+
+
+
+
+</log4j:configuration>
+
