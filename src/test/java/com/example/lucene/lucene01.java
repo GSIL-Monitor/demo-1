@@ -16,6 +16,7 @@ import org.apache.lucene.store.Directory;
 import org.apache.lucene.store.FSDirectory;
 import org.apache.lucene.util.Version;
 import org.junit.Test;
+import org.wltea.analyzer.lucene.IKAnalyzer;
 
 import java.io.File;
 import java.io.IOException;
@@ -24,20 +25,27 @@ import java.io.IOException;
  * @Author suosong
  * @Date 2018/6/9
  */
-public class lucene01 {
+public class Lucene01 {
 
+    private String documentPath = "D:\\吃饭的家伙\\lucene\\documents";
+    private String indexPath = "D:\\吃饭的家伙\\lucene\\index";
+
+    /**
+     * 创建索引
+     * @throws IOException
+     */
     @Test
-    public void test01() throws IOException {
+    public void testCreate() throws IOException {
         /**
          * 1,创建IndexWriter对象
          */
-        Directory dir  = FSDirectory.open(new File("/Users/peter/suosong/lucene/index01"));//索引目录
-        IndexWriterConfig conf = new IndexWriterConfig(Version.LUCENE_4_10_3,new StandardAnalyzer());
+        Directory dir  = FSDirectory.open(new File(indexPath));//索引目录
+        IndexWriterConfig conf = new IndexWriterConfig(Version.LUCENE_4_10_3,new IKAnalyzer(true));
         IndexWriter writer = new IndexWriter(dir,conf);
         /**
          * 2,创建document对象
          */
-        File srcDir = new File("/Users/peter/suosong/lucene/documents");
+        File srcDir = new File(documentPath);
         if(srcDir.isDirectory()){
             for(File file : srcDir.listFiles()){
                 String content = FileUtils.readFileToString(file);
@@ -53,13 +61,17 @@ public class lucene01 {
         writer.close();
     }
 
+    /**
+     * 查询索引
+     * @throws IOException
+     */
     @Test
     public void testSearch() throws IOException {
-        Directory dir  = FSDirectory.open(new File("/Users/peter/suosong/lucene/index01"));//索引目录
+        Directory dir  = FSDirectory.open(new File(indexPath));//索引目录
         IndexReader reader =  DirectoryReader.open(dir);
         IndexSearcher searcher = new IndexSearcher(reader);
 
-        TopDocs topDocs = searcher.search(new TermQuery(new Term("content","hadoop")),2);
+        TopDocs topDocs = searcher.search(new TermQuery(new Term("content","的")),2);
 
         for(ScoreDoc scoreDoc : topDocs.scoreDocs){
             Document doc = searcher.doc(scoreDoc.doc);
