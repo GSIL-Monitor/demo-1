@@ -4,17 +4,24 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.Map;
 
 @RestController
 public class TestController {
+    int i=0;
     @GetMapping("/test")
-    public Map<String,String> getMap(HttpServletRequest request){
+    public Map<String,String> getMap(HttpServletRequest request, HttpServletResponse response){
         Map<String,String> map = new HashMap<>();
-        map.put("hello","spring boot");
-
+        if(i++%2 == 0){
+            map.put("hello","spring boot");
+        }else {
+            map.put("name","呱嗒");
+            response.setStatus(304);
+            //return null;
+        }
 
 
         //for(String key : request.getHeaderNames())
@@ -25,6 +32,7 @@ public class TestController {
         }
         System.out.println("=================================================================================");
 
+        response.setHeader("Cache-Control","max-age=1000");
 
 
         return map;
