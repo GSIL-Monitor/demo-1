@@ -1,9 +1,11 @@
 package com.example.lunzi.spring.beans.factory.support;
 
+import com.example.lunzi.spring.beans.factory.BeanCreationException;
 import com.example.lunzi.spring.beans.factory.config.BeanDefinition;
 import com.example.lunzi.spring.beans.factory.BeanFactory;
 import org.springframework.context.annotation.Bean;
 
+import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.HashMap;
 import java.util.Map;
@@ -13,42 +15,62 @@ import java.util.Map;
  * @Date 2018/6/27
  */
 public class DefaultBeanFactory implements BeanFactory {
-    Map<String,BeanDefinition> beanDefinitionMap = new HashMap<>();
+    Map<String, BeanDefinition> beanDefinitionMap = new HashMap<>();
+    Object o ;//自己的实例,自己加上的。打算用Method来获得bean(注解)，
+    Class<?> configClazz;//配置文件的字节码对象，未来需要优化
 
-    public DefaultBeanFactory(Class<?> classType) throws InstantiationException, IllegalAccessException {
-        load(classType);
+    public DefaultBeanFactory(Class<?> classType)  {
+        initBeanDefinitionMap(classType);
+        //这个需要去看spring源码，这一块处理的不好
+        configClazz = classType;
+        try {
+            o = classType.newInstance();
+        } catch (InstantiationException e) {
+            e.printStackTrace();
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+        }
     }
 
     /**
      * 初始化definitionMap
      * 目前只支持方法名为name
+     *
      * @param
      */
-    private void load(Class<?> configClass) throws IllegalAccessException, InstantiationException {
+    private void initBeanDefinitionMap(Class<?> configClass)  {
 
         Method[] methods = configClass.getMethods();
-        if(methods == null)return;
-        for(Method method : methods){
+        if (methods == null) return;
+        for (Method method : methods) {
             Bean bean = method.getAnnotation(Bean.class);
-            if(bean == null)continue;
+            if (bean == null) continue;
             String name = method.getName();
             String className = method.getReturnType().getName();
-            GernericBeanDefinition definition = new GernericBeanDefinition(name,className);
-            this.beanDefinitionMap.put(name,definition);
+            String methodName = method.getName();
+            GenericBeanDefinition definition = new GenericBeanDefinition(name, className,methodName);
+            this.beanDefinitionMap.put(name, definition);
         }
     }
 
     @Override
     public Object getBean(String name) {
+
         BeanDefinition beanDefinition = this.getBeanDefinition(name);
-        if(beanDefinition == null) return null;
+        if (beanDefinition == null) return null;
         String className = beanDefinition.getClassName();
         try {
-            return Class.forName(className);
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
+            //return Class.forName(className).newInstance();
+            Method method = configClazz.getMethod(beanDefinition.getMethodName());
+            Object obj = method.invoke(this.o,null);
+            return obj;
+        }  catch (IllegalAccessException e) {
+            throw new BeanCreationException("创建bean对象失败", e);
+        }  catch (NoSuchMethodException e) {
+            throw new BeanCreationException("创建bean对象失败", e);
+        } catch (InvocationTargetException e) {
+            throw new BeanCreationException("创建bean对象失败", e);
         }
-        return null;
     }
 
     @Override

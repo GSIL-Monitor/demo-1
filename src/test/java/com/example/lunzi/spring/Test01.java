@@ -1,5 +1,6 @@
 package com.example.lunzi.spring;
 
+import com.example.lunzi.spring.beans.factory.BeanCreationException;
 import com.example.lunzi.spring.beans.factory.config.BeanDefinition;
 import com.example.lunzi.spring.beans.factory.BeanFactory;
 import com.example.lunzi.spring.beans.factory.support.DefaultBeanFactory;
@@ -19,10 +20,11 @@ public class Test01 {
         //org.springframework.beans.factory.BeanFactory
         //GenericBeanDefinition
         //org.springframework.beans.factory.config.BeanDefinition
+
     }
 
     @Test
-    public void test_getBean() throws IllegalAccessException, InstantiationException {
+    public void test_getBean() {
         BeanFactory factory = new DefaultBeanFactory(TestConfig.class);
         BeanDefinition beanDefinition = factory.getBeanDefinition("person");
         Assert.assertEquals("com.example.lunzi.spring.beans.Person",beanDefinition.getClassName());
@@ -30,5 +32,20 @@ public class Test01 {
         Assert.assertNotNull(person);
     }
 
+    /**
+     * 测试异常
+     */
+    @Test
+    public void test_beanCreationException(){
+        BeanFactory factory = new DefaultBeanFactory(TestConfig.class);
+
+        try {
+            factory.getBean("badPerson");
+        } catch (BeanCreationException e) {
+            e.printStackTrace();
+            return;
+        }
+        Assert.fail();
+    }
 
 }

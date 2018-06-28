@@ -6,5 +6,5 @@ package com.example.lunzi.spring.beans.factory.config;
  */
 public interface BeanDefinition {
      String getClassName() ;
-
+     String getMethodName();
 }
