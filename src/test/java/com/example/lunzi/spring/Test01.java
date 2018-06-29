@@ -1,9 +1,10 @@
 package com.example.lunzi.spring;
 
+import com.example.lunzi.spring.beans.Person;
 import com.example.lunzi.spring.beans.factory.BeanCreationException;
 import com.example.lunzi.spring.beans.factory.config.BeanDefinition;
 import com.example.lunzi.spring.beans.factory.BeanFactory;
-import com.example.lunzi.spring.beans.factory.support.DefaultBeanFactory;
+import com.example.lunzi.spring.beans.factory.support.AnnotationBeanFactory;
 import com.example.lunzi.spring.testconfig.TestConfig;
 import org.junit.Assert;
 import org.junit.Before;
@@ -20,16 +21,17 @@ public class Test01 {
         //org.springframework.beans.factory.BeanFactory
         //GenericBeanDefinition
         //org.springframework.beans.factory.config.BeanDefinition
-
+        //BeanDefinitionReader
     }
 
     @Test
     public void test_getBean() {
-        BeanFactory factory = new DefaultBeanFactory(TestConfig.class);
+        BeanFactory factory = new AnnotationBeanFactory(TestConfig.class);
         BeanDefinition beanDefinition = factory.getBeanDefinition("person");
         Assert.assertEquals("com.example.lunzi.spring.beans.Person",beanDefinition.getClassName());
         Object person = factory.getBean("person");
         Assert.assertNotNull(person);
+        Assert.assertEquals("xiaoming",((Person)person).getName());
     }
 
     /**
@@ -37,7 +39,7 @@ public class Test01 {
      */
     @Test
     public void test_beanCreationException(){
-        BeanFactory factory = new DefaultBeanFactory(TestConfig.class);
+        BeanFactory factory = new AnnotationBeanFactory(TestConfig.class);
 
         try {
             factory.getBean("badPerson");
