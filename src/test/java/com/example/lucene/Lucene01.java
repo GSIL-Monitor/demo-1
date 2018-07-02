@@ -27,8 +27,11 @@ import java.io.IOException;
  */
 public class Lucene01 {
 
-    private String documentPath = "D:\\吃饭的家伙\\lucene\\documents";
-    private String indexPath = "D:\\吃饭的家伙\\lucene\\index";
+    //private String documentPath = "D:\\吃饭的家伙\\lucene\\documents";
+    //private String indexPath = "D:\\吃饭的家伙\\lucene\\index";
+    private String indexPath = "/users/peter/suosong/lucene/index01";
+    private String documentPath = "/users/peter/suosong/lucene/documents";
+
 
     /**
      * 创建索引
@@ -79,6 +82,39 @@ public class Lucene01 {
         }
 
         reader.close();
+    }
+
+    /**
+     * 删除所有索引
+     */
+    @Test
+    public void deleteAllIndex() throws IOException {
+        IndexWriter writer = this.getIndexWriter();
+        writer.deleteAll();
+        writer.close();
+    }
+
+    /**
+     * 精确删除包含某个term的文档
+     */
+    @Test
+    public void deleteIndex() throws IOException {
+        IndexWriter writer = this.getIndexWriter();
+        writer.deleteDocuments(new TermQuery(new Term("content","data")));
+
+        writer.close();
+    }
+
+
+
+
+
+
+    private IndexWriter getIndexWriter() throws IOException {
+        Directory dir  = FSDirectory.open(new File(indexPath));//索引目录
+        IndexWriterConfig conf = new IndexWriterConfig(Version.LUCENE_4_10_3,new IKAnalyzer(true));
+        IndexWriter writer = new IndexWriter(dir,conf);
+        return writer;
     }
 
 }
