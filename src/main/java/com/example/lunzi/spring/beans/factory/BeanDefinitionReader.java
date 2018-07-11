@@ -1,4 +1,4 @@
-package com.example.lunzi.spring.context;
+package com.example.lunzi.spring.beans.factory;
 
 import com.example.lunzi.spring.beans.factory.BeanDefinitionStoreException;
 

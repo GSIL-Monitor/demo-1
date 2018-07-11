@@ -17,6 +17,11 @@ import com.example.lunzi.spring.beans.factory.config.BeanDefinition;
  * 包下面。
  */
 public interface BeanDefinitionRegistry {
+
     void registerBeanDefinition(String beanName, BeanDefinition beanDefinition)
             throws BeanDefinitionStoreException;
+
+    BeanDefinition getBeanDefinition(String person);
+
+    void setConfigObj(Object obj);//私自加上的
 }

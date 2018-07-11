@@ -4,8 +4,6 @@ import com.example.lunzi.spring.beans.factory.BeanDefinitionStoreException;
 import com.example.lunzi.spring.beans.factory.BeanCreationException;
 import com.example.lunzi.spring.beans.factory.config.BeanDefinition;
 import com.example.lunzi.spring.beans.factory.BeanFactory;
-import com.example.lunzi.spring.context.BeanDefinitionReader;
-import com.example.lunzi.spring.context.support.AnnotationBeanDefinitionReader;
 
 import java.lang.reflect.Method;
 import java.util.HashMap;
@@ -15,49 +13,22 @@ import java.util.Map;
  * @Author suosong
  * @Date 2018/6/27
  */
-public class AnnotationBeanFactory implements BeanFactory ,BeanDefinitionRegistry{
+public class AnnotationBeanFactory implements BeanFactory, BeanDefinitionRegistry {
+
     Map<String, BeanDefinition> beanDefinitionMap = new HashMap<>();
-    Object o ;//自己的实例,自己加上的。打算用Method来获得bean(注解)，
-    Class<?> configClazz;//配置文件的字节码对象，未来需要优化
 
-    BeanDefinitionReader reader;
-
-    public AnnotationBeanFactory(Class<?> classType)  {
-        this.reader = new AnnotationBeanDefinitionReader(this);
-        initBeanDefinitionMap(classType);
-        //这个需要去看spring源码，这一块处理的不好
-        configClazz = classType;
-        try {
-            o = classType.newInstance();
-        } catch (InstantiationException e) {
-            e.printStackTrace();
-        } catch (IllegalAccessException e) {
-            e.printStackTrace();
-        }
-    }
-
-    /**
-     * 初始化definitionMap
-     * 目前只支持方法名为name
-     *
-     * @param
-     */
-    private void initBeanDefinitionMap(Class<?> clazz)  {
-        this.reader.loadBeanDefinitions(clazz);
-    }
+    Object configObj;//自己私自加上的
 
     @Override
     public Object getBean(String name) {
 
         BeanDefinition beanDefinition = this.getBeanDefinition(name);
         if (beanDefinition == null) return null;
-        String className = beanDefinition.getClassName();
         try {
-            //return Class.forName(className).newInstance();
-            Method method = configClazz.getMethod(beanDefinition.getMethodName());
-            Object obj = method.invoke(this.o,null);
+            Method method = configObj.getClass().getMethod(beanDefinition.getMethodName());
+            Object obj = method.invoke(configObj, null);
             return obj;
-        }  catch (Exception e) {
+        } catch (Exception e) {
             throw new BeanCreationException("创建bean对象失败", e);
         }
     }
@@ -69,6 +40,10 @@ public class AnnotationBeanFactory implements BeanFactory ,BeanDefinitionRegistr
 
     @Override
     public void registerBeanDefinition(String beanName, BeanDefinition beanDefinition) throws BeanDefinitionStoreException {
-        this.beanDefinitionMap.put(beanName,beanDefinition);
+        this.beanDefinitionMap.put(beanName, beanDefinition);
+    }
+    @Override
+    public void setConfigObj(Object configObj) {
+        this.configObj = configObj;
     }
 }

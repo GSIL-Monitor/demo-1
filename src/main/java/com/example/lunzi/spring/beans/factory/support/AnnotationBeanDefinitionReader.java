@@ -1,9 +1,9 @@
-package com.example.lunzi.spring.context.support;
+package com.example.lunzi.spring.beans.factory.support;
 
 import com.example.lunzi.spring.beans.factory.BeanDefinitionStoreException;
 import com.example.lunzi.spring.beans.factory.support.BeanDefinitionRegistry;
 import com.example.lunzi.spring.beans.factory.support.GenericBeanDefinition;
-import com.example.lunzi.spring.context.BeanDefinitionReader;
+import com.example.lunzi.spring.beans.factory.BeanDefinitionReader;
 import org.springframework.context.annotation.Bean;
 
 import java.lang.reflect.Method;
@@ -33,6 +33,15 @@ public class AnnotationBeanDefinitionReader implements BeanDefinitionReader {
             GenericBeanDefinition definition = new GenericBeanDefinition(name, className,methodName);
             //注册
             this.registry.registerBeanDefinition(name, definition);
+        }
+
+        //下面是私自加上的
+        try {
+            this.registry.setConfigObj(clazz.newInstance());
+        } catch (InstantiationException e) {
+            e.printStackTrace();
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
         }
     }
 
