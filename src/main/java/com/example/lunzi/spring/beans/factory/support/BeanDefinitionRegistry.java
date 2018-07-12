@@ -23,5 +23,4 @@ public interface BeanDefinitionRegistry {
 
     BeanDefinition getBeanDefinition(String person);
 
-    void setConfigObj(Object obj);//私自加上的
 }

@@ -1,7 +1,8 @@
 package com.example.lunzi.spring;
 
 import com.example.lunzi.spring.context.ApplicationContext;
-import com.example.lunzi.spring.context.support.AnnotationConfigApplicationContext;
+import com.example.lunzi.spring.context.support.ClasspathXmlApplicationContext;
+import com.example.lunzi.spring.context.support.FileSystemXmlApplicationContext;
 import com.example.lunzi.spring.testconfig.TestConfig;
 import org.junit.Assert;
 import org.junit.Before;
@@ -17,13 +18,22 @@ public class ApplicationContextTest {
 
     @Before
     public void setup(){
-        applicationContext = new AnnotationConfigApplicationContext(TestConfig.class);
+        applicationContext = new ClasspathXmlApplicationContext("spring/spring-context.xml");
     }
 
     @Test
     public void test_getbean(){
         Object obj = applicationContext.getBean("person");
         Assert.assertNotNull(obj);
+        System.out.println(obj);
+    }
+
+    @Test
+    public void test_getbean02(){
+        ApplicationContext applicationContext = new FileSystemXmlApplicationContext("/Users/peter/suosong/git/demo/src/main/resources/spring/spring-context.xml");
+        Object obj = applicationContext.getBean("person");
+        Assert.assertNotNull(obj);
+        System.out.println(obj);
     }
 
 

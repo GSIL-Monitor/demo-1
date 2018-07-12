@@ -4,9 +4,8 @@ import com.example.lunzi.spring.beans.Person;
 import com.example.lunzi.spring.beans.factory.BeanCreationException;
 import com.example.lunzi.spring.beans.factory.BeanDefinitionReader;
 import com.example.lunzi.spring.beans.factory.config.BeanDefinition;
-import com.example.lunzi.spring.beans.factory.BeanFactory;
-import com.example.lunzi.spring.beans.factory.support.AnnotationBeanDefinitionReader;
-import com.example.lunzi.spring.beans.factory.support.AnnotationBeanFactory;
+import com.example.lunzi.spring.beans.factory.xml.XmlBeanDefinitionReader;
+import com.example.lunzi.spring.beans.factory.support.DefaultBeanFactory;
 import com.example.lunzi.spring.testconfig.TestConfig;
 import org.junit.Assert;
 import org.junit.Before;
@@ -18,14 +17,14 @@ import org.junit.Test;
  */
 public class BeanFactoryTest {
 
-    AnnotationBeanFactory factory = null;
+    DefaultBeanFactory factory = null;
     BeanDefinitionReader reader = null;
 
     @Before
     public void setup(){
-        factory = new AnnotationBeanFactory();
-        reader = new AnnotationBeanDefinitionReader(factory);
-        reader.loadBeanDefinitions(TestConfig.class);
+        factory = new DefaultBeanFactory();
+        reader = new XmlBeanDefinitionReader(factory);
+        //reader.loadBeanDefinitions("spring/spring-context.xml");
     }
 
     @Test

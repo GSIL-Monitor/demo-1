@@ -174,7 +174,7 @@ public abstract class ClassUtils {
 			// No thread context class loader -> use class loader of this class.
 			cl = ClassUtils.class.getClassLoader();
 			if (cl == null) {
-				// getClassLoader() returning null indicates the bootstrap ClassLoader
+				// getBeanClassLoader() returning null indicates the bootstrap ClassLoader
 				try {
 					cl = ClassLoader.getSystemClassLoader();
 				}
@@ -549,8 +549,8 @@ public abstract class ClassUtils {
 	}
 
 	/**
-	 * Return a path suitable for use with {@code ClassLoader.getResource}
-	 * (also suitable for use with {@code Class.getResource} by prepending a
+	 * Return a path suitable for use with {@code ClassLoader.getResourceByPath}
+	 * (also suitable for use with {@code Class.getResourceByPath} by prepending a
 	 * slash ('/') to the return value). Built by taking the package of the specified
 	 * class file, converting all dots ('.') to slashes ('/'), adding a trailing slash
 	 * if necessary, and concatenating the specified resource name to this.
@@ -577,8 +577,8 @@ public abstract class ClassUtils {
 	 * class's package name as a pathname, i.e., all dots ('.') are replaced by
 	 * slashes ('/'). Neither a leading nor trailing slash is added. The result
 	 * could be concatenated with a slash and the name of a resource and fed
-	 * directly to {@code ClassLoader.getResource()}. For it to be fed to
-	 * {@code Class.getResource} instead, a leading slash would also have
+	 * directly to {@code ClassLoader.getResourceByPath()}. For it to be fed to
+	 * {@code Class.getResourceByPath} instead, a leading slash would also have
 	 * to be prepended to the returned value.
 	 * @param clazz the input class. A {@code null} value or the default
 	 * (empty) package will result in an empty string ("") being returned.
