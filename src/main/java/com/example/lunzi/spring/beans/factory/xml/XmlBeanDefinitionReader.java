@@ -14,7 +14,6 @@ import org.dom4j.io.SAXReader;
 import org.springframework.context.annotation.Bean;
 
 
-
 import java.io.InputStream;
 import java.lang.reflect.Method;
 import java.util.Iterator;
@@ -33,6 +32,10 @@ public class XmlBeanDefinitionReader implements BeanDefinitionReader {
         this.registry = registry;
     }
 
+    private final String NAME_ATTRIBUTE = "name";
+    private final String CLASS_ATTRIBUTE = "class";
+    private final String SCOPE_ATTRIBUTE = "scope";
+
     @Override
     public void loadBeanDefinitions(Resource resource) throws BeanDefinitionStoreException {
         //Assert.notNull(path, "xml路径不能为空");
@@ -45,9 +48,12 @@ public class XmlBeanDefinitionReader implements BeanDefinitionReader {
             Iterator<Element> it = root.elementIterator();
             while (it.hasNext()) {
                 Element beanEle = it.next();
-                String name = beanEle.attributeValue("name");
-                String className = beanEle.attributeValue("class");
+                String name = beanEle.attributeValue(NAME_ATTRIBUTE);
+                String className = beanEle.attributeValue(CLASS_ATTRIBUTE);
+                String scope = beanEle.attributeValue(SCOPE_ATTRIBUTE);
+                if (null == scope) scope = "";
                 GenericBeanDefinition definition = new GenericBeanDefinition(name, className);
+                definition.setScope(scope);//这里必须用set方法，而不能放到构造函数中去
                 //注册
                 this.registry.registerBeanDefinition(name, definition);
             }
@@ -73,9 +79,9 @@ public class XmlBeanDefinitionReader implements BeanDefinitionReader {
             String name = method.getName();
             String className = method.getReturnType().getName();
             String methodName = method.getName();
-            GenericBeanDefinition definition = new GenericBeanDefinition(name, className, methodName);
+            //GenericBeanDefinition definition = new GenericBeanDefinition(name, className, methodName);
             //注册
-            this.registry.registerBeanDefinition(name, definition);
+            //this.registry.registerBeanDefinition(name, definition);
         }
 
        /* //下面是私自加上的

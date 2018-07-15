@@ -7,4 +7,6 @@
 
     <bean name="person" class="com.example.other.test01.Chinese"/>
 
+    <bean name="japanese" class="com.example.other.test01.Japanese" scope="prototype"/>
+
 </beans>

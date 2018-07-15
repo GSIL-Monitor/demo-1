@@ -6,30 +6,46 @@ import com.example.lunzi.spring.beans.factory.config.BeanDefinition;
  * @Author suosong
  * @Date 2018/6/27
  */
-public class GenericBeanDefinition implements BeanDefinition{
+public class GenericBeanDefinition implements BeanDefinition {
     private String name;
-    private String className;
-    private String methodName;
+    private String beanClassName;
 
-    public GenericBeanDefinition(String name, String className) {
+    private String scope = SCOPE_DEFAULT;
+    private boolean singleton = true;
+    private boolean prototype = false;
+
+    public GenericBeanDefinition(String name, String beanClassName) {
         this.name = name;
-        this.className = className;
+        this.beanClassName = beanClassName;
     }
 
-    public GenericBeanDefinition(String name, String className, String methodName) {
-        this.name = name;
-        this.className = className;
-        this.methodName = methodName;
+
+
+    @Override
+    public String getBeanClassName() {
+        return this.beanClassName;
     }
 
 
     @Override
-    public String getClassName() {
-        return this.className;
+    public boolean isSingleton() {
+        return this.singleton;
     }
 
     @Override
-    public String getMethodName() {
-        return this.methodName;
+    public boolean isPrototype() {
+        return this.prototype;
+    }
+
+    @Override
+    public String getScope() {
+        return this.scope;
+    }
+
+    @Override
+    public void setScope(String scope) {
+        this.scope = scope;
+        this.prototype = SCOPE_PROTOTYPE.equals(scope);
+        this.singleton = SCOPE_SINGLETON.equals(scope) || SCOPE_DEFAULT.equals(scope);//有点技巧性
     }
 }

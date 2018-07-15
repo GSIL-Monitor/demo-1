@@ -3,11 +3,10 @@ package com.example.lunzi.spring.beans.factory.support;
 import com.example.lunzi.spring.beans.factory.BeanDefinitionStoreException;
 import com.example.lunzi.spring.beans.factory.BeanCreationException;
 import com.example.lunzi.spring.beans.factory.config.BeanDefinition;
-import com.example.lunzi.spring.beans.factory.BeanFactory;
 import com.example.lunzi.spring.beans.factory.config.ConfigurableBeanFactory;
+import com.example.lunzi.spring.beans.factory.config.DefaultSingletonBeanRegistry;
 import com.example.lunzi.spring.utils.ClassUtils;
 
-import java.lang.reflect.Method;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -15,7 +14,7 @@ import java.util.Map;
  * @Author suosong
  * @Date 2018/6/27
  */
-public class DefaultBeanFactory implements ConfigurableBeanFactory, BeanDefinitionRegistry {
+public class DefaultBeanFactory extends DefaultSingletonBeanRegistry implements ConfigurableBeanFactory, BeanDefinitionRegistry  {
 
     Map<String, BeanDefinition> beanDefinitionMap = new HashMap<>();
     ClassLoader beanClassLoader;//Bean加载器
@@ -27,8 +26,19 @@ public class DefaultBeanFactory implements ConfigurableBeanFactory, BeanDefiniti
         BeanDefinition beanDefinition = this.getBeanDefinition(name);
         if (beanDefinition == null) return null;
         try {
-            String className = beanDefinition.getClassName();
-            return this.getBeanClassLoader().loadClass(className).newInstance();
+            Object bean = null;
+            String beanClassName = beanDefinition.getBeanClassName();
+            //如果是单例的，从单例接口中拿
+            if(beanDefinition.isSingleton()){
+                bean = this.getSingleton(beanClassName);
+                if(bean == null){
+                    bean = createBean(beanDefinition);
+                    this.registerSingleton(beanClassName,bean);
+                }
+            }else {
+                bean = createBean(beanDefinition);
+            }
+            return bean;
         } catch (Exception e) {
             throw new BeanCreationException("创建bean对象失败", e);
         }
@@ -56,5 +66,9 @@ public class DefaultBeanFactory implements ConfigurableBeanFactory, BeanDefiniti
     @Override
     public void setBeanClassLoader(ClassLoader beanClassLoader) {
         this.beanClassLoader = beanClassLoader;
+    }
+
+    private Object createBean(BeanDefinition beanDefinition) throws ClassNotFoundException, IllegalAccessException, InstantiationException {
+        return this.getBeanClassLoader().loadClass(beanDefinition.getBeanClassName()).newInstance();
     }
 }
