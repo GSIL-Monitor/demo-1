@@ -1,10 +1,11 @@
 package com.example.lunzi.spring.utils;
 
 /**
+ * 对于工具类，最好是用abstract.不让用户new出来
  * @Author suosong
  * @Date 2018/7/11
  */
-public class Assert {
+public abstract class Assert {
 
     public static void notNull( Object object, String message) {
         if (object == null) {

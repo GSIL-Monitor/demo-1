@@ -5,7 +5,12 @@
        http://www.springframework.org/schema/beans/spring-beans-4.0.xsd"
        >
 
-    <bean name="person" class="com.example.other.test01.Chinese"/>
+    <bean name="person" class="com.example.other.test01.Chinese">
+        <property name="account" ref="account"></property>
+        <property name="userName" value="xiaoming"></property>
+    </bean>
+
+    <bean name="account" class="com.example.other.test01.Account"></bean>
 
     <bean name="japanese" class="com.example.other.test01.Japanese" scope="prototype"/>
 

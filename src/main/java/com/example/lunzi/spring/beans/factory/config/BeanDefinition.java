@@ -1,5 +1,7 @@
 package com.example.lunzi.spring.beans.factory.config;
 
+import java.util.List;
+
 /**
  * @Author suosong
  * @Date 2018/6/27
@@ -20,6 +22,8 @@ public interface BeanDefinition {
     void setScope(String scope);
 
     String getBeanClassName();
+
+    List<PropertyValue> getPropertyValues();
 
 
 }

@@ -1,6 +1,9 @@
 package com.example.lunzi.spring.beans.factory.xml;
 
 import com.example.lunzi.spring.beans.factory.BeanDefinitionStoreException;
+import com.example.lunzi.spring.beans.factory.config.PropertyValue;
+import com.example.lunzi.spring.beans.factory.config.RuntimeBeanReference;
+import com.example.lunzi.spring.beans.factory.config.TypeStringValue;
 import com.example.lunzi.spring.beans.factory.support.BeanDefinitionRegistry;
 import com.example.lunzi.spring.beans.factory.support.GenericBeanDefinition;
 import com.example.lunzi.spring.beans.factory.BeanDefinitionReader;
@@ -35,6 +38,9 @@ public class XmlBeanDefinitionReader implements BeanDefinitionReader {
     private final String NAME_ATTRIBUTE = "name";
     private final String CLASS_ATTRIBUTE = "class";
     private final String SCOPE_ATTRIBUTE = "scope";
+    private final String REF_ATTRIBUTE = "ref";
+    private final String VALUE_ATTRIBUTE = "value";
+    private final String PROPERTY_ELEMENT = "property";
 
     @Override
     public void loadBeanDefinitions(Resource resource) throws BeanDefinitionStoreException {
@@ -54,6 +60,8 @@ public class XmlBeanDefinitionReader implements BeanDefinitionReader {
                 if (null == scope) scope = "";
                 GenericBeanDefinition definition = new GenericBeanDefinition(name, className);
                 definition.setScope(scope);//这里必须用set方法，而不能放到构造函数中去
+                //解析<property>标签
+                parseProperty(beanEle, definition);
                 //注册
                 this.registry.registerBeanDefinition(name, definition);
             }
@@ -63,6 +71,35 @@ public class XmlBeanDefinitionReader implements BeanDefinitionReader {
         }
 
     }
+
+    /**
+     * 解析property标签
+     *
+     * @param beanEle
+     * @param definition
+     */
+    private void parseProperty(Element beanEle, GenericBeanDefinition definition) {
+        Iterator<Element> eleIterator = beanEle.elementIterator(PROPERTY_ELEMENT);
+        while (eleIterator.hasNext()) {
+            Element proElement = eleIterator.next();
+            String proName = proElement.attributeValue(NAME_ATTRIBUTE);
+            String proRef = proElement.attributeValue(REF_ATTRIBUTE);
+            String proValue = proElement.attributeValue(VALUE_ATTRIBUTE);
+            if (proRef != null) {
+                RuntimeBeanReference rf = new RuntimeBeanReference(proRef);
+                PropertyValue pv = new PropertyValue(proName,rf);
+                definition.getPropertyValues().add(pv);
+            } else if(proValue != null){
+                TypeStringValue tsv = new TypeStringValue(proValue);
+                PropertyValue pv = new PropertyValue(proName,tsv);
+                definition.getPropertyValues().add(pv);
+            }else {
+                //既没有ref 又没有 value
+                throw new IllegalStateException("xml 缺少参数");
+            }
+        }
+    }
+
 
     /**
      * 读注解

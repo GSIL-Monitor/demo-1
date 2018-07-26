@@ -1,6 +1,10 @@
 package com.example.lunzi.spring.beans.factory.support;
 
 import com.example.lunzi.spring.beans.factory.config.BeanDefinition;
+import com.example.lunzi.spring.beans.factory.config.PropertyValue;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @Author suosong
@@ -14,10 +18,13 @@ public class GenericBeanDefinition implements BeanDefinition {
     private boolean singleton = true;
     private boolean prototype = false;
 
+    private List<PropertyValue> propertyValues = new ArrayList<>();
+
     public GenericBeanDefinition(String name, String beanClassName) {
         this.name = name;
         this.beanClassName = beanClassName;
     }
+
 
 
 
@@ -47,5 +54,10 @@ public class GenericBeanDefinition implements BeanDefinition {
         this.scope = scope;
         this.prototype = SCOPE_PROTOTYPE.equals(scope);
         this.singleton = SCOPE_SINGLETON.equals(scope) || SCOPE_DEFAULT.equals(scope);//有点技巧性
+    }
+
+    @Override
+    public List<PropertyValue> getPropertyValues() {
+        return this.propertyValues;
     }
 }
