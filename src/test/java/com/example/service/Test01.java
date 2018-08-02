@@ -1,8 +1,7 @@
 package com.example.service;
 
-import com.example.demo.DemoApplication;
+import com.example.DemoApplication;
 import com.example.other.test01.Account;
-import com.example.other.test01.Person;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.test.context.ContextConfiguration;

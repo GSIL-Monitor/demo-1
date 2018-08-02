@@ -1,15 +1,10 @@
 package com.example.service;
 
-import com.example.demo.DemoApplication;
+import com.example.DemoApplication;
 import com.example.other.test01.Account;
-import com.example.other.test01.Person;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-
-import javax.annotation.Resource;
 
 import java.util.concurrent.TimeUnit;
 

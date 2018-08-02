@@ -21,4 +21,12 @@ public class Chinese implements Person{
     public void setUserName(String userName) {
         this.userName = userName;
     }
+
+    public Account getAccount() {
+        return account;
+    }
+
+    public String getUserName() {
+        return userName;
+    }
 }

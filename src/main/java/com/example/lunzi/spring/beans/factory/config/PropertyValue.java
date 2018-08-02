@@ -26,4 +26,12 @@ public class PropertyValue {
     public Object getConvertedObject() {
         return convertedObject;
     }
+
+    public Object getValue() {
+        return value;
+    }
+
+    public String getName() {
+        return name;
+    }
 }
