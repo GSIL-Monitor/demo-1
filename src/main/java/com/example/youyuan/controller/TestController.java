@@ -17,4 +17,12 @@ public class TestController {
         map.put("address","北京");
         return new ResultJson(ResultType.SUCCESS,"syrni");
     }
+
+    @GetMapping("/")
+    public String index(){
+        return "曹会雅，小笨蛋";
+    }
+
+
+
 }

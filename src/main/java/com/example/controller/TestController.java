@@ -52,5 +52,14 @@ public class TestController {
         return "hello:" + name;
     }
 
+   /* @GetMapping("/hello/question")
+    @ApiOperation(value="获得用户名", notes="传入用户名，返回打招呼")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "name", value = "用户名称", required = true, dataType = "String"),
+    })
+    public String getName(@PathVariable("name") String name) {
+        return "hello:" + name;
+    }*/
+
 
 }
