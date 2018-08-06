@@ -4,8 +4,12 @@ import com.example.lunzi.spring.beans.Person;
 import com.example.lunzi.spring.beans.factory.BeanCreationException;
 import com.example.lunzi.spring.beans.factory.BeanDefinitionReader;
 import com.example.lunzi.spring.beans.factory.config.BeanDefinition;
+import com.example.lunzi.spring.beans.factory.config.ConstructorArgument;
 import com.example.lunzi.spring.beans.factory.xml.XmlBeanDefinitionReader;
 import com.example.lunzi.spring.beans.factory.support.DefaultBeanFactory;
+import com.example.lunzi.spring.core.io.ClassPathResource;
+import com.example.lunzi.spring.core.io.Resource;
+import com.example.other.test01.Cat;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -23,7 +27,8 @@ public class BeanFactoryTest {
     public void setup(){
         factory = new DefaultBeanFactory();
         reader = new XmlBeanDefinitionReader(factory);
-        //reader.loadBeanDefinitions("spring/spring-context.xml");
+        Resource resource = new ClassPathResource("spring/spring-context.xml");
+        reader.loadBeanDefinitions(resource);
     }
 
     @Test
@@ -48,6 +53,22 @@ public class BeanFactoryTest {
             return;
         }
         Assert.fail();
+    }
+
+    /**
+     * 测试构造器注入
+     */
+    @Test
+    public void test_constructor(){
+        BeanDefinition bd = factory.getBeanDefinition("cat");
+        ConstructorArgument constructorArgument = bd.getConstructorArgument();
+        Assert.assertSame(3,constructorArgument.getValueHoders().size());
+
+        Object obj = factory.getBean("cat");
+        Assert.assertNotNull(obj);
+
+        Cat cat = (Cat) obj;
+        Assert.assertTrue("花花".equals(cat.getName()));
     }
 
 }

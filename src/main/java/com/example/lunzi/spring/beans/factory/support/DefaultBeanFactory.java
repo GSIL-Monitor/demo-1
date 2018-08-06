@@ -2,15 +2,10 @@ package com.example.lunzi.spring.beans.factory.support;
 
 import com.example.lunzi.spring.beans.factory.BeanDefinitionStoreException;
 import com.example.lunzi.spring.beans.factory.BeanCreationException;
-import com.example.lunzi.spring.beans.factory.config.BeanDefinition;
-import com.example.lunzi.spring.beans.factory.config.ConfigurableBeanFactory;
-import com.example.lunzi.spring.beans.factory.config.DefaultSingletonBeanRegistry;
-import com.example.lunzi.spring.beans.factory.config.PropertyValue;
+import com.example.lunzi.spring.beans.factory.config.*;
 import com.example.lunzi.spring.utils.ClassUtils;
 import org.apache.commons.beanutils.BeanUtils;
 
-import java.beans.Introspector;
-import java.beans.PropertyEditor;
 import java.lang.reflect.InvocationTargetException;
 import java.util.HashMap;
 import java.util.List;
@@ -25,7 +20,8 @@ public class DefaultBeanFactory extends DefaultSingletonBeanRegistry implements 
     Map<String, BeanDefinition> beanDefinitionMap = new HashMap<>();
     ClassLoader beanClassLoader;//Bean加载器
 
-    BeanDefinitionValueResolver resolver = new BeanDefinitionValueResolver(this);
+    BeanDefinitionValueResolver valueResolver = new BeanDefinitionValueResolver(this);
+    ConstructorResolver constructorResolver = new ConstructorResolver(this);
 
     //BeanFactory接口定义
     @Override
@@ -44,7 +40,9 @@ public class DefaultBeanFactory extends DefaultSingletonBeanRegistry implements 
                     this.registerSingleton(beanClassName, bean);
                 }
             } else {
+
                 bean = createBean(beanDefinition);
+
             }
             return bean;
         } catch (Exception e) {
@@ -77,8 +75,14 @@ public class DefaultBeanFactory extends DefaultSingletonBeanRegistry implements 
     }
 
     private Object createBean(BeanDefinition beanDefinition) throws ClassNotFoundException, IllegalAccessException, InstantiationException, InvocationTargetException {
-        Object bean = this.instantiateBean(beanDefinition);
-        this.populate(bean,beanDefinition);
+        Object bean = null;
+        if (!beanDefinition.getConstructorArgument().isEmpty()) {//配置了构造函数
+            bean = constructorResolver.autowireConstructor(beanDefinition);
+        } else {
+            bean = this.instantiateBean(beanDefinition);
+        }
+        //setter注入
+        this.populate(bean, beanDefinition);
         return bean;
     }
 
@@ -97,25 +101,21 @@ public class DefaultBeanFactory extends DefaultSingletonBeanRegistry implements 
 
     /**
      * 依赖注入,用了apache commons-beans包
+     * spring源码中使用了专门的Convert类，比较复杂
      *
      * @param beanDefinition
      */
-    private void populate(Object bean,BeanDefinition beanDefinition) throws InvocationTargetException, IllegalAccessException {
+    private void populate(Object bean, BeanDefinition beanDefinition) throws InvocationTargetException, IllegalAccessException {
         List<PropertyValue> propertyValueList = beanDefinition.getPropertyValues();
         if (propertyValueList == null || propertyValueList.size() == 0) return;
-
-        Map<String,Object> map = new HashMap<>(16);
-        for(PropertyValue propertyValue : propertyValueList){
+        for (PropertyValue propertyValue : propertyValueList) {
+            String propertyName = propertyValue.getName();
             Object value = propertyValue.getValue();
-            Object resolverValue = resolver.resolveValueIfNecessary(value);
-            map.put(propertyValue.getName(),resolverValue);
-
+            Object resolverValue = valueResolver.resolveValueIfNecessary(value);
+            BeanUtils.setProperty(bean, propertyName, resolverValue);
             //操作propertyValue的其他字段
             //PropertyEditor
         }
-
-        //也可以用java 的 Introspector来做，也挺简单的。这里就用成熟的第三方包了。
-        BeanUtils.populate(bean,map);
     }
 
 }

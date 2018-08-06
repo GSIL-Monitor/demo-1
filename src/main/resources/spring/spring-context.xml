@@ -14,4 +14,11 @@
 
     <bean name="japanese" class="com.example.other.test01.Japanese" scope="prototype"/>
 
+
+    <bean name="cat" class="com.example.other.test01.Cat">
+        <constructor-arg name="account" ref="account"></constructor-arg>
+        <constructor-arg name="name" value="花花"></constructor-arg>
+        <constructor-arg name="age" value="30"></constructor-arg>
+    </bean>
+
 </beans>

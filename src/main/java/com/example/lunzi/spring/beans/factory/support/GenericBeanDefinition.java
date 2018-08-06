@@ -1,6 +1,7 @@
 package com.example.lunzi.spring.beans.factory.support;
 
 import com.example.lunzi.spring.beans.factory.config.BeanDefinition;
+import com.example.lunzi.spring.beans.factory.config.ConstructorArgument;
 import com.example.lunzi.spring.beans.factory.config.PropertyValue;
 
 import java.util.ArrayList;
@@ -20,13 +21,18 @@ public class GenericBeanDefinition implements BeanDefinition {
 
     private List<PropertyValue> propertyValues = new ArrayList<>();
 
+    private ConstructorArgument constructorArgument = new ConstructorArgument();
+
     public GenericBeanDefinition(String name, String beanClassName) {
         this.name = name;
         this.beanClassName = beanClassName;
     }
 
 
-
+    @Override
+    public ConstructorArgument getConstructorArgument() {
+        return this.constructorArgument;
+    }
 
     @Override
     public String getBeanClassName() {

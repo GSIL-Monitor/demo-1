@@ -1,6 +1,7 @@
 package com.example.lunzi.spring.beans.factory.xml;
 
 import com.example.lunzi.spring.beans.factory.BeanDefinitionStoreException;
+import com.example.lunzi.spring.beans.factory.config.ConstructorArgument;
 import com.example.lunzi.spring.beans.factory.config.PropertyValue;
 import com.example.lunzi.spring.beans.factory.config.RuntimeBeanReference;
 import com.example.lunzi.spring.beans.factory.config.TypeStringValue;
@@ -8,8 +9,6 @@ import com.example.lunzi.spring.beans.factory.support.BeanDefinitionRegistry;
 import com.example.lunzi.spring.beans.factory.support.GenericBeanDefinition;
 import com.example.lunzi.spring.beans.factory.BeanDefinitionReader;
 import com.example.lunzi.spring.core.io.Resource;
-import com.example.lunzi.spring.utils.Assert;
-import com.example.lunzi.spring.utils.ClassUtils;
 
 import org.dom4j.Document;
 import org.dom4j.Element;
@@ -41,6 +40,7 @@ public class XmlBeanDefinitionReader implements BeanDefinitionReader {
     private final String REF_ATTRIBUTE = "ref";
     private final String VALUE_ATTRIBUTE = "value";
     private final String PROPERTY_ELEMENT = "property";
+    private final String CONSTRUCTOR_ARG = "constructor-arg";
 
     @Override
     public void loadBeanDefinitions(Resource resource) throws BeanDefinitionStoreException {
@@ -62,6 +62,8 @@ public class XmlBeanDefinitionReader implements BeanDefinitionReader {
                 definition.setScope(scope);//这里必须用set方法，而不能放到构造函数中去
                 //解析<property>标签
                 parseProperty(beanEle, definition);
+                //解析<constructor-arg>标签
+                parseConstructorArgument(beanEle,definition);
                 //注册
                 this.registry.registerBeanDefinition(name, definition);
             }
@@ -98,6 +100,35 @@ public class XmlBeanDefinitionReader implements BeanDefinitionReader {
                 throw new IllegalStateException("xml 缺少参数");
             }
         }
+    }
+
+    /**
+     * 解析构造函数
+     * @param beanEle
+     * @param definition
+     */
+    private void parseConstructorArgument(Element beanEle, GenericBeanDefinition definition) {
+
+        Iterator<Element> elementIterator = beanEle.elementIterator(CONSTRUCTOR_ARG);
+        while(elementIterator.hasNext()){
+            Element consEle = elementIterator.next();
+            String name = consEle.attributeValue(NAME_ATTRIBUTE);
+            String  ref = consEle.attributeValue(REF_ATTRIBUTE);
+            String value = consEle.attributeValue(VALUE_ATTRIBUTE);
+            if (ref != null) {
+                RuntimeBeanReference rf = new RuntimeBeanReference(ref);
+                ConstructorArgument.ValueHoder vh = new ConstructorArgument.ValueHoder(name,rf);
+                definition.getConstructorArgument().addArgument(vh);
+            } else if(value != null){
+                TypeStringValue tsv = new TypeStringValue(value);
+                ConstructorArgument.ValueHoder vh = new ConstructorArgument.ValueHoder(name,tsv);
+                definition.getConstructorArgument().addArgument(vh);
+            }else {
+                //既没有ref 又没有 value
+                throw new IllegalStateException("xml 缺少参数");
+            }
+        }
+
     }
 
 
