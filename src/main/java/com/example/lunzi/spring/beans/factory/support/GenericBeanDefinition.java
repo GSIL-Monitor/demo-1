@@ -66,4 +66,9 @@ public class GenericBeanDefinition implements BeanDefinition {
     public List<PropertyValue> getPropertyValues() {
         return this.propertyValues;
     }
+
+    @Override
+    public boolean hasConstructorArgumentValues() {
+        return !this.constructorArgument.isEmpty();
+    }
 }

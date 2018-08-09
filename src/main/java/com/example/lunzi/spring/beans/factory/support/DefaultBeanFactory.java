@@ -76,7 +76,7 @@ public class DefaultBeanFactory extends DefaultSingletonBeanRegistry implements 
 
     private Object createBean(BeanDefinition beanDefinition) throws ClassNotFoundException, IllegalAccessException, InstantiationException, InvocationTargetException {
         Object bean = null;
-        if (!beanDefinition.getConstructorArgument().isEmpty()) {//配置了构造函数
+        if (beanDefinition.hasConstructorArgumentValues()) {//配置了构造函数
             bean = constructorResolver.autowireConstructor(beanDefinition);
         } else {
             bean = this.instantiateBean(beanDefinition);

@@ -62,4 +62,9 @@ public class TestController {
     }*/
 
 
+    @GetMapping("/h1/exception")
+    public String hello() {
+        throw new RuntimeException("异常了");
+    }
+
 }

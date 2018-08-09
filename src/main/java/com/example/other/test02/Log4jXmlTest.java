@@ -4,7 +4,7 @@ import org.apache.log4j.Logger;
 
 public class Log4jXmlTest {
     public static void main(String[] args) {
-        Logger logger = Logger.getLogger(Log4jXmlTest.class);
+        Logger logger = Logger.getLogger("error");
         logger.debug("debug");
         logger.info("info");
         //logger.error("error啦{}");

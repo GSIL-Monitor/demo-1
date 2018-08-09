@@ -2,6 +2,7 @@ package com.example;
 
 import com.example.youyuan.dao.TestDao;
 import com.example.youyuan.pojo.Test01;
+import org.apache.log4j.Logger;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -45,6 +46,12 @@ public class DemoApplicationTests {
 		Calendar calendar = Calendar.getInstance();
 		calendar.set(Calendar.MONTH,4);
 		testDao.updateTest01_time(calendar.getTime(),6501);
+	}
+
+	@Test
+	public void test_log4j(){
+		Logger logger = Logger.getLogger("error");
+		logger.error("hello spring xxx"+new Date());
 	}
 
 }

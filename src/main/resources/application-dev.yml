@@ -10,3 +10,10 @@ spring:
     driver-class-name: com.mysql.jdbc.Driver
 
 
+#  .表示当前项目目录
+log4j:
+  path: .
+
+
+debug: false
+

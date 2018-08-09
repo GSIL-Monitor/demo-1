@@ -27,5 +27,8 @@ public interface BeanDefinition {
 
     ConstructorArgument getConstructorArgument();
 
+    //是否有构造方法
+    boolean hasConstructorArgumentValues();
+
 
 }
