@@ -1,4 +1,4 @@
-package com.example.lunzi.spring.testconfig;
+package com.example.lunzi.spring;
 
 import com.example.lunzi.spring.core.io.Resource;
 import com.example.lunzi.spring.core.io.support.PackageResourceLoader;
