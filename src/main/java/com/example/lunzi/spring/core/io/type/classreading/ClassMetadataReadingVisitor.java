@@ -11,7 +11,7 @@ import org.objectweb.asm.Opcodes;
  * @Author suosong
  * @Date 2018/8/10
  */
-public class ClassMetadataReadingVisitor extends ClassVisitor{
+public class ClassMetadataReadingVisitor extends ClassVisitor implements ClassMetadata{
 
     String className;
     boolean isAbstract;

@@ -14,7 +14,7 @@ import java.util.Map;
  * @Author suosong
  * @Date 2018/8/10
  */
-public class AnnotationMetadataReadingVisitor extends ClassMetadataReadingVisitor {
+public class AnnotationMetadataReadingVisitor extends ClassMetadataReadingVisitor implements AnnotationMetadata{
 
 
     Map<String,AnnotationAttributes> attributesMap = new HashMap<>();

@@ -12,7 +12,7 @@ import java.util.Map;
  * @Author suosong
  * @Date 2018/8/10
  */
-public class AnnotationAttributesReadingVisitor extends AnnotationVisitor {
+public class AnnotationAttributesReadingVisitor extends AnnotationVisitor implements AnnotationMetadata{
 
 
     String className;//注解名
