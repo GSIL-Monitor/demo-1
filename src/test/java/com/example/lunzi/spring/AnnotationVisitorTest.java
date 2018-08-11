@@ -33,7 +33,7 @@ public class AnnotationVisitorTest {
         Assert.assertTrue(visitor.hasAnnotation("com.example.lunzi.spring.stereotypa.Component"));
 
         Assert.assertEquals("suosong",
-                visitor.getAttrbuteValue("com.example.lunzi.spring.stereotypa.Component","value"));
+                visitor.getAnnotationAttributeValue("com.example.lunzi.spring.stereotypa.Component","value"));
 
     }
 }

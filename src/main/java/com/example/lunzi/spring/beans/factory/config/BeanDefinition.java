@@ -30,5 +30,11 @@ public interface BeanDefinition {
     //是否有构造方法
     boolean hasConstructorArgumentValues();
 
+    String getBeanName();//获得bean id
+
+    void setBeanClassName(String beanClassName);
+
+    void setBeanName(String beanName);
+
 
 }

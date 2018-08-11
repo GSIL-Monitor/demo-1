@@ -2,6 +2,7 @@ package com.example.lunzi.spring.context.annotation;
 
 import com.example.lunzi.spring.beans.factory.config.BeanDefinition;
 import com.example.lunzi.spring.beans.factory.support.BeanDefinitionRegistry;
+import com.example.lunzi.spring.beans.factory.support.BeanNameGenerator;
 import com.example.lunzi.spring.core.io.Resource;
 import com.example.lunzi.spring.core.io.support.PackageResourceLoader;
 import com.example.lunzi.spring.core.io.type.AnnotationMetadata;
@@ -40,7 +41,7 @@ public class ClasspathBeanDefinitionScanner {
             Set<BeanDefinition> candidates = findCandidateComponets(basePackage);
             beanDefinitions.addAll(candidates);
             for (BeanDefinition beanDefinition : candidates) {
-                beanDefinitionRegistry.registerBeanDefinition(beanDefinition.getBeanClassName(), beanDefinition);
+                beanDefinitionRegistry.registerBeanDefinition(beanDefinition.getBeanName(), beanDefinition);
             }
         }
         return beanDefinitions;
@@ -58,10 +59,14 @@ public class ClasspathBeanDefinitionScanner {
             AnnotationMetadata annotationMetadata = reader.getAnnotationMetadata();
             ClassMetadata classMetadata = reader.getClassMetadata();
             if (annotationMetadata.hasAnnotation(Component.class.getName())) {
-                //假设一定有value属性
-                String name = (String) annotationMetadata.getAnnotationAttributeValue(Component.class.getName(), "value");
+
                 String beanClassName = classMetadata.getClassName();
-                BeanDefinition beanDefinition = new ScannedGenericBeanDefinition(name, beanClassName, annotationMetadata);
+                BeanDefinition beanDefinition = new ScannedGenericBeanDefinition( annotationMetadata);
+                beanDefinition.setBeanClassName(beanClassName);
+                BeanNameGenerator beanNameGenerator = new AnnotationBeanNameGenerator();
+                String beanName = beanNameGenerator.generateBeanName(beanDefinition,beanDefinitionRegistry);//创建bean名称
+                beanDefinition.setBeanName(beanName);
+
                 candidates.add(beanDefinition);
             }
         }

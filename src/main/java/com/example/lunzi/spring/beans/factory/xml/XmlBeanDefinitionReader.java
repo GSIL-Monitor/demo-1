@@ -58,7 +58,9 @@ public class XmlBeanDefinitionReader implements BeanDefinitionReader {
                 String className = beanEle.attributeValue(CLASS_ATTRIBUTE);
                 String scope = beanEle.attributeValue(SCOPE_ATTRIBUTE);
                 if (null == scope) scope = "";
-                GenericBeanDefinition definition = new GenericBeanDefinition(name, className);
+                GenericBeanDefinition definition = new GenericBeanDefinition();
+                definition.setName(name);
+                definition.setBeanClassName(className);
                 definition.setScope(scope);//这里必须用set方法，而不能放到构造函数中去
                 //解析<property>标签
                 parseProperty(beanEle, definition);

@@ -12,8 +12,9 @@ public class ScannedGenericBeanDefinition extends GenericBeanDefinition implemen
 
     AnnotationMetadata annotationMetadata;
 
-    public ScannedGenericBeanDefinition(String name, String beanClassName,AnnotationMetadata annotationMetadata) {
-        super(name, beanClassName);
+
+
+    public ScannedGenericBeanDefinition(AnnotationMetadata annotationMetadata) {
         this.annotationMetadata = annotationMetadata;
     }
 

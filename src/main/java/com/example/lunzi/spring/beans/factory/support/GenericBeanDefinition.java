@@ -23,11 +23,13 @@ public class GenericBeanDefinition implements BeanDefinition {
 
     private ConstructorArgument constructorArgument = new ConstructorArgument();
 
-    public GenericBeanDefinition(String name, String beanClassName) {
+    public void setName(String name) {
         this.name = name;
-        this.beanClassName = beanClassName;
     }
 
+    public void setBeanClassName(String beanClassName) {
+        this.beanClassName = beanClassName;
+    }
 
     @Override
     public ConstructorArgument getConstructorArgument() {
@@ -70,5 +72,15 @@ public class GenericBeanDefinition implements BeanDefinition {
     @Override
     public boolean hasConstructorArgumentValues() {
         return !this.constructorArgument.isEmpty();
+    }
+
+    @Override
+    public String getBeanName() {
+        return this.name;
+    }
+
+    @Override
+    public void setBeanName(String beanName) {
+        this.name = beanName;
     }
 }
