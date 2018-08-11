@@ -1,5 +1,6 @@
 package com.example.lunzi.spring.core.io.type.classreading;
 
+import com.example.lunzi.spring.core.io.type.AnnotationMetadata;
 import org.objectweb.asm.AnnotationVisitor;
 import org.objectweb.asm.Opcodes;
 
@@ -12,7 +13,7 @@ import java.util.Map;
  * @Author suosong
  * @Date 2018/8/10
  */
-public class AnnotationAttributesReadingVisitor extends AnnotationVisitor implements AnnotationMetadata{
+public class AnnotationAttributesReadingVisitor extends AnnotationVisitor {
 
 
     String className;//注解名
@@ -43,4 +44,6 @@ public class AnnotationAttributesReadingVisitor extends AnnotationVisitor implem
     public void visitEnd() {
         this.attributesMap.put(className,attributes);
     }
+
+
 }

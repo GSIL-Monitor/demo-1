@@ -1,11 +1,13 @@
 package com.example.lunzi.spring.core.io.type.classreading;
 
 
+import com.example.lunzi.spring.core.io.type.AnnotationMetadata;
 import org.objectweb.asm.AnnotationVisitor;
 import org.objectweb.asm.Type;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Set;
 
 
 /**
@@ -14,7 +16,7 @@ import java.util.Map;
  * @Author suosong
  * @Date 2018/8/10
  */
-public class AnnotationMetadataReadingVisitor extends ClassMetadataReadingVisitor implements AnnotationMetadata{
+public class AnnotationMetadataReadingVisitor extends ClassMetadataReadingVisitor implements AnnotationMetadata {
 
 
     Map<String,AnnotationAttributes> attributesMap = new HashMap<>();
@@ -37,17 +39,26 @@ public class AnnotationMetadataReadingVisitor extends ClassMetadataReadingVisito
 
     }
 
+    @Override
     public boolean hasAnnotation(String annotationClassName){
         return this.attributesMap.keySet().contains(annotationClassName);
     }
 
-    public Object getAttrbuteValue(String annotationValue ,String attributeName){
+    @Override
+    public Object getAnnotationAttributeValue(String annotationValue ,String attributeName){
         AnnotationAttributes attributes = this.attributesMap.get(annotationValue);
         if(attributes != null){
             return attributes.get(attributeName);
         }
         return null;
     }
+
+    @Override
+    public Set<String> getAnnotationTypes() {
+        return this.attributesMap.keySet();
+    }
+
+
 
 
 }

@@ -1,5 +1,6 @@
 package com.example.lunzi.spring.core.io.type.classreading;
 
+import com.example.lunzi.spring.core.io.type.ClassMetadata;
 import com.example.lunzi.spring.utils.ClassUtils;
 import org.objectweb.asm.ClassVisitor;
 import org.objectweb.asm.FieldVisitor;
@@ -11,7 +12,7 @@ import org.objectweb.asm.Opcodes;
  * @Author suosong
  * @Date 2018/8/10
  */
-public class ClassMetadataReadingVisitor extends ClassVisitor implements ClassMetadata{
+public class ClassMetadataReadingVisitor extends ClassVisitor implements ClassMetadata {
 
     String className;
     boolean isAbstract;
@@ -80,5 +81,38 @@ public class ClassMetadataReadingVisitor extends ClassVisitor implements ClassMe
     @Override
     public MethodVisitor visitMethod(int access, String name, String desc, String signature, String[] exceptions) {
         return super.visitMethod(access, name, desc, signature, exceptions);
+    }
+
+
+
+
+    @Override
+    public String getClassName() {
+        return this.className;
+    }
+
+    @Override
+    public boolean isAbstract() {
+        return this.isAbstract;
+    }
+
+    @Override
+    public boolean isFinal() {
+        return this.isFinal;
+    }
+
+    @Override
+    public boolean isInterface() {
+        return this.isInterface;
+    }
+
+    @Override
+    public String getSuperClassName() {
+        return this.superClassName;
+    }
+
+    @Override
+    public String[] getInterfaceNames() {
+        return this.interfaces;
     }
 }

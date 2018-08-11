@@ -1,4 +1,4 @@
-package com.example.lunzi.spring.core.io.type.classreading;
+package com.example.lunzi.spring.core.io.type;
 
 import com.example.lunzi.spring.core.io.Resource;
 
