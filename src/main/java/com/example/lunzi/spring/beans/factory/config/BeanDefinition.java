@@ -32,9 +32,13 @@ public interface BeanDefinition {
 
     String getBeanName();//获得bean id
 
-    void setBeanClassName(String beanClassName);
+    void setBeanClassName(String beanClassName) throws ClassNotFoundException;
 
     void setBeanName(String beanName);
 
+    Class getBeanClass();
+    //初始化beanclass
+    void resolveBeanClass(ClassLoader classLoader) throws ClassNotFoundException;
+    boolean hasBeanClass();
 
 }

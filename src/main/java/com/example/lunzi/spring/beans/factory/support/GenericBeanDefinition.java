@@ -14,6 +14,7 @@ import java.util.List;
 public class GenericBeanDefinition implements BeanDefinition {
     private String name;
     private String beanClassName;
+    private Class beanClass;
 
     private String scope = SCOPE_DEFAULT;
     private boolean singleton = true;
@@ -27,7 +28,8 @@ public class GenericBeanDefinition implements BeanDefinition {
         this.name = name;
     }
 
-    public void setBeanClassName(String beanClassName) {
+    @Override
+    public void setBeanClassName(String beanClassName)  {
         this.beanClassName = beanClassName;
     }
 
@@ -82,5 +84,20 @@ public class GenericBeanDefinition implements BeanDefinition {
     @Override
     public void setBeanName(String beanName) {
         this.name = beanName;
+    }
+
+    @Override
+    public Class getBeanClass() {
+        return this.beanClass;
+    }
+
+    @Override
+    public void resolveBeanClass(ClassLoader classLoader) throws ClassNotFoundException {
+        this.beanClass = classLoader.loadClass(this.beanClassName);
+    }
+
+    @Override
+    public boolean hasBeanClass() {
+        return this.beanClass != null;
     }
 }

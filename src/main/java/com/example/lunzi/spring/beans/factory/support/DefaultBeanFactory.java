@@ -74,6 +74,23 @@ public class DefaultBeanFactory extends DefaultSingletonBeanRegistry implements 
         this.beanClassLoader = beanClassLoader;
     }
 
+    @Override
+    public Object resolveDependency(DependencyDescriptor dependencyDescriptor) throws ClassNotFoundException {
+        Class classToMatch = dependencyDescriptor.getDependencyType();
+        for (BeanDefinition bd : beanDefinitionMap.values()) {
+            resolveBeanClass(bd,this.getBeanClassLoader());//确保bd的beanClass属性是有值的
+            if (classToMatch.isAssignableFrom(bd.getBeanClass())) {//参数跟他一样，或者是其子类
+                return this.getBean(bd.getBeanName());
+            }
+        }
+        return null;
+    }
+
+    private void resolveBeanClass(BeanDefinition bd, ClassLoader beanClassLoader) throws ClassNotFoundException {
+        if(bd.hasBeanClass())return;
+        bd.resolveBeanClass(beanClassLoader);
+    }
+
     private Object createBean(BeanDefinition beanDefinition) throws ClassNotFoundException, IllegalAccessException, InstantiationException, InvocationTargetException {
         Object bean = null;
         if (beanDefinition.hasConstructorArgumentValues()) {//配置了构造函数
@@ -116,6 +133,11 @@ public class DefaultBeanFactory extends DefaultSingletonBeanRegistry implements 
             //操作propertyValue的其他字段
             //PropertyEditor
         }
+    }
+
+    public static void main(String[] args) {
+        System.out.println(DefaultBeanFactory.class.isAssignableFrom(Object.class));
+        System.out.println(Object.class.isAssignableFrom(DefaultBeanFactory.class));
     }
 
 }

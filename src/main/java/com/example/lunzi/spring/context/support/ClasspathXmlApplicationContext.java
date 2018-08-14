@@ -1,5 +1,6 @@
 package com.example.lunzi.spring.context.support;
 
+import com.example.lunzi.spring.beans.factory.config.DependencyDescriptor;
 import com.example.lunzi.spring.core.io.ClassPathResource;
 import com.example.lunzi.spring.core.io.Resource;
 
@@ -18,4 +19,6 @@ public class ClasspathXmlApplicationContext extends AbstractApplicationContext{
         //支持外界传入的classLoader.
         return new ClassPathResource(this.getBeanClassLoader(),path);
     }
+
+
 }

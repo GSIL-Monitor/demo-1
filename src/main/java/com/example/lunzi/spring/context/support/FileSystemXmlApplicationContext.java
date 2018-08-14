@@ -1,6 +1,7 @@
 package com.example.lunzi.spring.context.support;
 
 import com.example.lunzi.spring.beans.factory.BeanDefinitionReader;
+import com.example.lunzi.spring.beans.factory.config.DependencyDescriptor;
 import com.example.lunzi.spring.beans.factory.support.DefaultBeanFactory;
 import com.example.lunzi.spring.beans.factory.xml.XmlBeanDefinitionReader;
 import com.example.lunzi.spring.context.ApplicationContext;
@@ -21,4 +22,5 @@ public class FileSystemXmlApplicationContext extends AbstractApplicationContext{
     protected Resource getResourceByPath(String path) {
         return new FileSystemResource(this.getBeanClassLoader(),path);
     }
+
 }

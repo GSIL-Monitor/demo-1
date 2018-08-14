@@ -100,7 +100,7 @@ public class XmlBeanDefinitionReader implements BeanDefinitionReader {
         return CONTEXT_NAMESPACE_URI.equals(nameSpaceUri);
     }
 
-    private void parseDefaultElement(Element ele) {
+    private void parseDefaultElement(Element ele) throws ClassNotFoundException {
         String name = ele.attributeValue(NAME_ATTRIBUTE);
         String className = ele.attributeValue(CLASS_ATTRIBUTE);
         String scope = ele.attributeValue(SCOPE_ATTRIBUTE);
