@@ -2,6 +2,9 @@ package com.example.lunzi.spring.context.support;
 
 import com.example.lunzi.spring.beans.factory.BeanDefinitionReader;
 
+import com.example.lunzi.spring.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor;
+import com.example.lunzi.spring.beans.factory.config.BeanPostProcessor;
+import com.example.lunzi.spring.beans.factory.config.ConfigurableBeanFactory;
 import com.example.lunzi.spring.beans.factory.support.DefaultBeanFactory;
 import com.example.lunzi.spring.beans.factory.xml.XmlBeanDefinitionReader;
 import com.example.lunzi.spring.context.ApplicationContext;
@@ -23,6 +26,9 @@ public abstract class AbstractApplicationContext implements ApplicationContext {
         reader.loadBeanDefinitions(resource);
         //放入beanClassLoader,用于加载bean
         factory.setBeanClassLoader(this.getBeanClassLoader());
+        //注册beanPostProcessor
+        this.registerBeanPostProcessor(factory);
+
     }
     //org.springframework.context.support.AbstractApplicationContext
 
@@ -39,15 +45,19 @@ public abstract class AbstractApplicationContext implements ApplicationContext {
     }
 
 
-    //ConfigurableBeanFactory接口定义
-    @Override
+    //接口继承有点不顺
     public ClassLoader getBeanClassLoader() {
         return this.beanClassLoader == null ? ClassUtils.getDefaultClassLoader() : this.beanClassLoader;
     }
 
-    //ConfigurableBeanFactory接口定义
+    /*//ConfigurableBeanFactory接口定义
     @Override
     public void setBeanClassLoader(ClassLoader beanClassLoader) {
         this.beanClassLoader = beanClassLoader;
+    }*/
+
+    private void registerBeanPostProcessor(ConfigurableBeanFactory factory){
+        BeanPostProcessor beanPostProcessor = new AutowiredAnnotationBeanPostProcessor(factory);
+        factory.addBeanPostProcessor(beanPostProcessor);
     }
 }

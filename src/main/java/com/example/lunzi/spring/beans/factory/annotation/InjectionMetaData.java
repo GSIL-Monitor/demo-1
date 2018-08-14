@@ -9,11 +9,11 @@ import java.util.List;
  * @Date 2018/8/13
  */
 public class InjectionMetaData {
-    Class targetClass;
+    //Class targetClass;
     List<InjectionElement> injectionElements;
 
-    public InjectionMetaData(Class targetClass, List<InjectionElement> injectionElements) {
-        this.targetClass = targetClass;
+    public InjectionMetaData( List<InjectionElement> injectionElements) {
+
         this.injectionElements = injectionElements;
     }
 

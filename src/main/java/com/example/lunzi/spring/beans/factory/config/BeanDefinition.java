@@ -32,7 +32,7 @@ public interface BeanDefinition {
 
     String getBeanName();//获得bean id
 
-    void setBeanClassName(String beanClassName) throws ClassNotFoundException;
+    void setBeanClassName(String beanClassName) ;
 
     void setBeanName(String beanName);
 

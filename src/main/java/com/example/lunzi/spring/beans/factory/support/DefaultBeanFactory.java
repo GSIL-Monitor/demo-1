@@ -2,11 +2,13 @@ package com.example.lunzi.spring.beans.factory.support;
 
 import com.example.lunzi.spring.beans.factory.BeanDefinitionStoreException;
 import com.example.lunzi.spring.beans.factory.BeanCreationException;
+import com.example.lunzi.spring.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor;
 import com.example.lunzi.spring.beans.factory.config.*;
 import com.example.lunzi.spring.utils.ClassUtils;
 import org.apache.commons.beanutils.BeanUtils;
 
 import java.lang.reflect.InvocationTargetException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -22,6 +24,8 @@ public class DefaultBeanFactory extends DefaultSingletonBeanRegistry implements 
 
     BeanDefinitionValueResolver valueResolver = new BeanDefinitionValueResolver(this);
     ConstructorResolver constructorResolver = new ConstructorResolver(this);
+
+    List<BeanPostProcessor> beanPostProcessors = new ArrayList<>();
 
     //BeanFactory接口定义
     @Override
@@ -98,7 +102,7 @@ public class DefaultBeanFactory extends DefaultSingletonBeanRegistry implements 
         } else {
             bean = this.instantiateBean(beanDefinition);
         }
-        //setter注入
+        //依赖注入
         this.populate(bean, beanDefinition);
         return bean;
     }
@@ -120,9 +124,19 @@ public class DefaultBeanFactory extends DefaultSingletonBeanRegistry implements 
      * 依赖注入,用了apache commons-beans包
      * spring源码中使用了专门的Convert类，比较复杂
      *
+     * 1，进行autowired注入
+     * 2，进行setter 注入
+     *
      * @param beanDefinition
      */
     private void populate(Object bean, BeanDefinition beanDefinition) throws InvocationTargetException, IllegalAccessException {
+        for(BeanPostProcessor beanPostProcessor : this.beanPostProcessors){
+            if(beanPostProcessor instanceof AutowiredAnnotationBeanPostProcessor){
+                AutowiredAnnotationBeanPostProcessor processor = (AutowiredAnnotationBeanPostProcessor)beanPostProcessor;
+                processor.postProcessPropertyValues(bean,beanDefinition.getBeanName());
+            }
+        }
+
         List<PropertyValue> propertyValueList = beanDefinition.getPropertyValues();
         if (propertyValueList == null || propertyValueList.size() == 0) return;
         for (PropertyValue propertyValue : propertyValueList) {
@@ -133,6 +147,16 @@ public class DefaultBeanFactory extends DefaultSingletonBeanRegistry implements 
             //操作propertyValue的其他字段
             //PropertyEditor
         }
+    }
+
+    @Override
+    public void addBeanPostProcessor(BeanPostProcessor beanPostProcessor) {
+        this.beanPostProcessors.add(beanPostProcessor);
+    }
+
+    @Override
+    public List<BeanPostProcessor> getBeanPostProcessors() {
+        return this.beanPostProcessors;
     }
 
     public static void main(String[] args) {

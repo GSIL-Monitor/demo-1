@@ -48,7 +48,7 @@ public class ClasspathBeanDefinitionScanner {
     }
 
 
-    Set<BeanDefinition> findCandidateComponets(String basePackage) throws IOException {
+    Set<BeanDefinition> findCandidateComponets(String basePackage) throws IOException{
         PackageResourceLoader loader = new PackageResourceLoader();
         Resource[] resources = loader.getResources(basePackage);
         Set<BeanDefinition> candidates = new LinkedHashSet<>();

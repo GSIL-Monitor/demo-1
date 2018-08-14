@@ -1,5 +1,6 @@
 package com.example.demo;
 
+import com.example.lunzi.spring.beans.factory.annotation.AutoWired;
 import com.example.lunzi.spring.stereotypa.Component;
 
 /**
@@ -8,4 +9,11 @@ import com.example.lunzi.spring.stereotypa.Component;
  */
 @Component
 public class Father {
+
+    @AutoWired(required = "true")
+    Mother mother;
+
+    public Mother getMother() {
+        return mother;
+    }
 }

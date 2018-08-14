@@ -15,19 +15,18 @@ import java.util.List;
  * @Author suosong
  * @Date 2018/8/13
  */
-public class AutowiredAnnotationProcessor implements InitializationAwareBeanPostProcessor {
+public class AutowiredAnnotationBeanPostProcessor implements InitializationAwareBeanPostProcessor {
 
-    Class beanClass;
+
     AutowireCapableBeanFactory factory;
 
-    public AutowiredAnnotationProcessor(Class beanClass, AutowireCapableBeanFactory factory) {
-        this.beanClass = beanClass;
+    public AutowiredAnnotationBeanPostProcessor(AutowireCapableBeanFactory factory) {
         this.factory = factory;
     }
 
-    private InjectionMetaData buildAutowiredMetadata() {
+    private InjectionMetaData buildAutowiredMetadata(Class beanClass) {
         List<InjectionElement> injectionElements = new ArrayList<>();
-        Field[] fields = this.beanClass.getDeclaredFields();
+        Field[] fields = beanClass.getDeclaredFields();
         for (Field field : fields) {
             Annotation autoWiredAnnotation = field.getAnnotation(AutoWired.class);
             if (autoWiredAnnotation == null) continue;
@@ -36,7 +35,7 @@ public class AutowiredAnnotationProcessor implements InitializationAwareBeanPost
             InjectionElement ele = new AutowireFieldElement(required, field, factory);
             injectionElements.add(ele);
         }
-        return new InjectionMetaData(beanClass, injectionElements);
+        return new InjectionMetaData( injectionElements);
     }
 
 
@@ -52,7 +51,7 @@ public class AutowiredAnnotationProcessor implements InitializationAwareBeanPost
 
     @Override
     public void postProcessPropertyValues(Object bean, String beanName) throws BeansException {
-        InjectionMetaData injectionMetaData = this.buildAutowiredMetadata();
+        InjectionMetaData injectionMetaData = this.buildAutowiredMetadata(bean.getClass());
         injectionMetaData.inject(bean);
     }
 

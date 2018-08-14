@@ -1,5 +1,6 @@
 package com.example.lunzi.spring;
 
+import com.example.demo.Father;
 import com.example.lunzi.spring.context.ApplicationContext;
 import com.example.lunzi.spring.context.support.ClasspathXmlApplicationContext;
 import com.example.lunzi.spring.context.support.FileSystemXmlApplicationContext;
@@ -42,8 +43,15 @@ public class ApplicationContextTest {
         Chinese person = (Chinese) applicationContext.getBean("person");
         Assert.assertNotNull(person.getUserName() );
         Assert.assertNotNull(person.getAccount());
+    }
 
-
+    /**
+     * 测试注解依赖注入
+     */
+    @Test
+    public void test_autowired(){
+        Father father = (Father) applicationContext.getBean("father");
+        Assert.assertNotNull(father.getMother());
     }
 
 
