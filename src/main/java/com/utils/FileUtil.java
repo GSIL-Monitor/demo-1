@@ -1,6 +1,5 @@
-package com.example.utils;
+package com.utils;
 
-import org.apache.commons.io.FileUtils;
 
 import java.io.File;
 import java.net.URL;
@@ -64,6 +63,7 @@ public abstract class FileUtil {
      *
      * @return
      */
+    @Deprecated
     public static String getProjectPath() {
         return new File("").getAbsolutePath();
     }
