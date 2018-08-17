@@ -1,6 +1,6 @@
 package com.example.service;
 
-import com.example.DemoApplication;
+import com.DemoApplication;
 import com.example.other.test01.Account;
 import org.junit.Test;
 import org.junit.runner.RunWith;

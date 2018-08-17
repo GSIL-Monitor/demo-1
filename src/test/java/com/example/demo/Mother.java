@@ -1,6 +1,6 @@
 package com.example.demo;
 
-import com.example.lunzi.spring.stereotypa.Component;
+import com.lunzi.spring.stereotypa.Component;
 
 /**
  * @Author suosong
