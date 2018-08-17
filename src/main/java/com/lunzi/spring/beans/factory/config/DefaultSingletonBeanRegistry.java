@@ -1,6 +1,7 @@
 package com.lunzi.spring.beans.factory.config;
 
-import com.lunzi.spring.utils.Assert;
+
+import org.springframework.util.Assert;
 
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;

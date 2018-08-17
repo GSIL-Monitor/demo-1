@@ -1,4 +1,4 @@
-package com.interview.spring.config;
+package com.spring.config;
 
 import org.springframework.context.annotation.Condition;
 import org.springframework.context.annotation.ConditionContext;

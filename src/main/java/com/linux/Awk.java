@@ -1,4 +1,4 @@
-package com.interview.linux;
+package com.linux;
 
 /**
  * 讲了awk的基本用法

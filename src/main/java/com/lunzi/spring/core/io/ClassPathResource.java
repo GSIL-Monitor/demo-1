@@ -1,7 +1,9 @@
 package com.lunzi.spring.core.io;
 
-import com.lunzi.spring.utils.Assert;
-import com.lunzi.spring.utils.ClassUtils;
+
+
+import org.springframework.util.Assert;
+import org.springframework.util.ClassUtils;
 
 import java.io.IOException;
 import java.io.InputStream;

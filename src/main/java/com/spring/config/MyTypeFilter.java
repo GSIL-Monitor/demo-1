@@ -1,4 +1,4 @@
-package com.interview.spring.config;
+package com.spring.config;
 
 import org.springframework.core.type.ClassMetadata;
 import org.springframework.core.type.classreading.MetadataReader;

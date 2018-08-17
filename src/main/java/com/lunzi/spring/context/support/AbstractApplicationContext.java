@@ -9,7 +9,7 @@ import com.lunzi.spring.beans.factory.support.DefaultBeanFactory;
 import com.lunzi.spring.beans.factory.xml.XmlBeanDefinitionReader;
 import com.lunzi.spring.context.ApplicationContext;
 import com.lunzi.spring.core.io.Resource;
-import com.lunzi.spring.utils.ClassUtils;
+import org.springframework.util.ClassUtils;
 
 /**
  * @Author suosong

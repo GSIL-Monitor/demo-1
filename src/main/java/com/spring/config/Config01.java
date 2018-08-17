@@ -1,6 +1,6 @@
-package com.interview.spring.config;
+package com.spring.config;
 
-import com.interview.spring.bean.Person;
+
 import org.springframework.context.annotation.*;
 
 /**
@@ -12,7 +12,7 @@ import org.springframework.context.annotation.*;
  * 只有设置了useDefaultFilters = false ，过滤器才能起作用,当设置为false，而又没有设置过滤器时，是不会进行包扫描的，切记
  *
  */
-@ComponentScan(basePackages = {"com.interview.spring"},useDefaultFilters = false,
+@ComponentScan(basePackages = {"com.spring"},useDefaultFilters = false,
         includeFilters = {
                 @ComponentScan.Filter(type = FilterType.CUSTOM,classes = MyTypeFilter.class)
         }

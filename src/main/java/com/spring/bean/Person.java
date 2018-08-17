@@ -1,4 +1,4 @@
-package com.interview.spring.bean;
+package com.spring.bean;
 
 /**
  * @Author suosong

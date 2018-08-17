@@ -2,7 +2,7 @@ package com.lunzi.spring.core.io.support;
 
 import com.lunzi.spring.core.io.FileSystemResource;
 import com.lunzi.spring.core.io.Resource;
-import com.lunzi.spring.utils.ClassUtils;
+import org.springframework.util.ClassUtils;
 
 import java.io.File;
 import java.net.URL;

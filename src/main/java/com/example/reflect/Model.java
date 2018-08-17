@@ -1,9 +1,5 @@
 package com.example.reflect;
 
-import com.sun.org.apache.xpath.internal.operations.Mod;
-import org.apache.lucene.util.ToStringUtils;
-
-import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;
 import java.util.Map;
 import java.util.TreeMap;

@@ -4,8 +4,8 @@ import com.lunzi.spring.beans.factory.BeanDefinitionStoreException;
 import com.lunzi.spring.beans.factory.BeanCreationException;
 import com.lunzi.spring.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor;
 import com.lunzi.spring.beans.factory.config.*;
-import com.lunzi.spring.utils.ClassUtils;
 import org.apache.commons.beanutils.BeanUtils;
+import org.springframework.util.ClassUtils;
 
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;

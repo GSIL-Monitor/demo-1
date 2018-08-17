@@ -3,7 +3,7 @@ package com.lunzi.spring.beans.factory.annotation;
 import com.lunzi.spring.beans.factory.BeanCreationException;
 import com.lunzi.spring.beans.factory.config.AutowireCapableBeanFactory;
 import com.lunzi.spring.beans.factory.config.DependencyDescriptor;
-import com.lunzi.spring.utils.ReflectionUtils;
+import org.springframework.util.ReflectionUtils;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Member;

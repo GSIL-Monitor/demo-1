@@ -1,13 +1,10 @@
 package com.interview.spring.test;
 
-import com.interview.spring.bean.Person;
-import com.interview.spring.config.Config01;
-import org.apache.commons.logging.impl.SimpleLog;
+import com.spring.bean.Person;
+import com.spring.config.Config01;
 import org.junit.Test;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
-
-import java.util.logging.Logger;
 
 /**
  * @Author suosong

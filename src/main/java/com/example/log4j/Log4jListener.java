@@ -1,6 +1,5 @@
 package com.example.log4j;
 
-import com.utils.FileUtil;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.IOUtils;
 import org.apache.log4j.xml.DOMConfigurator;
@@ -70,9 +69,6 @@ public class Log4jListener implements ApplicationListener {
         //DOMConfigurator.
     }
 
-    public static void main(String[] args) {
-        File file = new File("classpath:dom4j.xml");
-        System.out.println(file.exists());
-    }
+
 
 }

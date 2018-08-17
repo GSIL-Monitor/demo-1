@@ -6,7 +6,7 @@ import com.lunzi.spring.beans.factory.support.BeanDefinitionRegistry;
 import com.lunzi.spring.beans.factory.support.BeanNameGenerator;
 import com.lunzi.spring.core.io.type.AnnotationMetadata;
 import com.lunzi.spring.stereotypa.Component;
-import com.lunzi.spring.utils.ClassUtils;
+import org.springframework.util.ClassUtils;
 
 import java.beans.Introspector;
 

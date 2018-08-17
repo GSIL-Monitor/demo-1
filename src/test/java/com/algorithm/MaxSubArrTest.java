@@ -1,4 +1,4 @@
-package com.interview.algorithm;
+package com.algorithm;
 
 import org.junit.Before;
 import org.junit.Test;

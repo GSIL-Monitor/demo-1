@@ -1,11 +1,11 @@
 package com.lunzi.spring.core.io.type.classreading;
 
 import com.lunzi.spring.core.io.type.ClassMetadata;
-import com.lunzi.spring.utils.ClassUtils;
 import org.objectweb.asm.ClassVisitor;
 import org.objectweb.asm.FieldVisitor;
 import org.objectweb.asm.MethodVisitor;
 import org.objectweb.asm.Opcodes;
+import org.springframework.util.ClassUtils;
 
 /**
  * asm的观察者
