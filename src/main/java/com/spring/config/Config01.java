@@ -2,7 +2,7 @@ package com.spring.config;
 
 
 import org.springframework.context.annotation.*;
-
+import com.spring.bean.Person;
 /**
  * @Author suosong
  * @Date 2018/8/14
