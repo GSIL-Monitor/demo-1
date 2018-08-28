@@ -6,6 +6,7 @@ import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 
 /**
  * 统计
@@ -38,8 +39,18 @@ public abstract class StatisticUtil {
         System.out.println("demo项目一共有 " + count + " 行");
         //写入测试文件
         File file = new File("src/main/resources/lines.txt");
-        String content = new SimpleDateFormat("yyyy-MM-dd").format(new Date()) +
-                "\t" + count + "\n";
-        FileUtils.write(file, content, true);
+        String today = new SimpleDateFormat("yyyy-MM-dd").format(new Date());
+        List<String> strings = FileUtils.readLines(file);
+        if (strings != null && strings.size() > 1) {
+            String lastLine = strings.get(strings.size() - 1);
+            String lastDate = lastLine.split("\t")[0];
+            int lastCount = Integer.parseInt(lastLine.split("\t")[1]);
+            if (!today.equals(lastDate)) {
+                int diffCount = count - lastCount;
+                String content = today +
+                        "\t" + count + "\t" + diffCount + "\n";
+                FileUtils.write(file, content, true);
+            }
+        }
     }
 }

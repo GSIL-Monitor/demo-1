@@ -24,8 +24,8 @@ public class FileUploadController {
     @PostMapping("/file/v1")
     public Object upload(HttpServletRequest request) {
         //只有request中包含Multipart，才能正常上传
-        /*boolean containsMultipart = ServletFileUpload.isMultipartContent(request);
-        if (!containsMultipart) return "error , not exist multipart";*/
+        boolean containsMultipart = ServletFileUpload.isMultipartContent(request);
+        if (!containsMultipart) return "error , not exist multipart";
         //设置了缓存区大小，如果文件超过缓存区，那么就需要用到临时存储区
         DiskFileItemFactory diskFileItemFactory = new DiskFileItemFactory(10 * 1024 * 1024, new File("/Users/peter/suosong/tempUpload"));
         List<FileItem> fileItems;

@@ -10,7 +10,7 @@ import org.springframework.stereotype.Repository;
 @Repository
 public class AopTest {
 
-    @Pointcut("execution(com.example.youyuan.dto.ResultJson com..*.*(..))")
+   /* @Pointcut("execution(com.example.youyuan.dto.ResultJson com..*.*(..))")
     private void showMethod() {
 
     }
@@ -19,5 +19,5 @@ public class AopTest {
     public Object aroundMethod(ProceedingJoinPoint pjp) throws Throwable {
         System.out.println("拦截到了======");
         return pjp.proceed();
-    }
+    }*/
 }

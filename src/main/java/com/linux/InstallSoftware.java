@@ -15,5 +15,6 @@ package com.linux;
     make && make install                         //将编译跟安装一块做
 
  */
+
 public class InstallSoftware {
 }
