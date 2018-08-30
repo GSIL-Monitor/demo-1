@@ -24,7 +24,7 @@ package com.git;
      版本回退：
         版本回退指的是回退到本地commit的版本。如果多人开发一个项目，可以看到每次其他人commit的代码。
         git log   //查看commit 的id
-        git reset --head "commit id"   //commit id 没有必要写全，有个五六位就好了
+        git reset --hard "commit id"   //commit id 没有必要写全，有个五六位就好了
         如果版本回退了，想恢复版本，此时git log是找不到最新的版本的。只能到现在的版本记录。
         git reflog     //这个命令可以帮我们找到最新的（本地历史）
 
@@ -68,6 +68,39 @@ package com.git;
 
     建议的操作就是用 git stash保留现场，然后切换分支
 
+
+    删除分支
+        git branch -d 分支        如果分支没有被其他分支合并，是不允许删除的。因为删除后，修改的内容就彻底丢失了
+        git branch -D 分支        丢失修改
+
+
+    多人协作：
+        当你从远程仓库克隆时，实际上Git自动把本地的master分支和远程的master分支对应起来了，并且，远程仓库的默认名称是origin。
+        要查看远程库的信息，用git remote：
+
+        $ git remote
+        origin
+
+        或者，用git remote -v显示更详细的信息：
+
+        $ git remote -v
+        origin  git@github.com:michaelliao/learngit.git (fetch)
+        origin  git@github.com:michaelliao/learngit.git (push)
+        上面显示了可以抓取和推送的origin的地址。如果没有推送权限，就看不到push的地址。
+
+    git 建立本地分支与远程分支的连接
+        git branch --set-upstream-to=origin/dev dev
+
+    git 查看远程分支
+        git好像是没有专门查看远程分支的能力。
+        可以用git branch -a   命令来查看所有的分支，包含远程分支
+
+    git 创建远程分支
+        git没有特别的命令来创建远程分支，将本地分支推到远程，就是创建了。创建后会自动关联两个分支
+        git push origin dev:origin-dev
+    git 删除远程分支
+        很朴素的想法就是给远程分支推送一个空分支
+        git push origin :origin-dev
 
 
  */

@@ -75,8 +75,31 @@ package com.maven;
 
  远程仓库的配置
     远程仓库除了中央仓库，还有另外两个著名的，入jboss与 java.net 。如果要从这些地方下载jar包，就需要在pom文件中配置远程仓库
+    <repositories>
+        <repository>
+            <id>jboss-maven2-release-repository</id>
+            <name>jboss repository</name>
+            <url>http://repository.jboss.org/maven2/</url>
+            <releases>
+                <enabled>true</enabled>
+            </releases>
+            <snapshots>
+                <enabled>true</enabled>
+            </snapshots>
+        </repository>
+    </repositories>
 
-
+    任何一个仓库声明的id都是唯一的。中央仓库的id为central ，如果这里配置的仓库id也是central，那么这个仓库就会覆盖中央仓库
+    本人感觉是下载jar包时，可能是先从中央仓库找，如果找不到，就从配置的仓库找，最后找不到，就报错
+    一般仓库是不需要认证的（用户名密码），但是有些仓库，比如私服（本质上也是一个仓库），往往会有用户名密码。
+    单是这个不是写在pom文件中的。因为pom文件大家都可以看，这个写在本地的settings.xml文件中
+    <servers>
+        <server>
+            <id>这里写仓库的id,正是这个信息跟pom文件中的配置绑定在了一起</id>
+            <username></username>
+            <password></password>
+        </server>
+    </servers>
 
 
 
