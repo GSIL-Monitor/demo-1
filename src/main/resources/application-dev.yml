@@ -9,6 +9,19 @@ spring:
     password: 123
     driver-class-name: com.mysql.jdbc.Driver
 
+    #多数据源
+    primary:
+      url: jdbc:mysql://47.98.237.224:3306/test
+      username: root
+      password: 123
+      driver-class-name: com.mysql.jdbc.Driver
+
+    secondary:
+      url: jdbc:mysql://47.98.237.224:3306/test
+      username: root
+      password: 123
+      driver-class-name: com.mysql.jdbc.Driver
+
 
 #  .表示当前项目目录
 log4j:

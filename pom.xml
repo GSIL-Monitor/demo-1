@@ -171,13 +171,35 @@
 
 	</dependencies>
 
+	<!--非私服，只能下载，不能上传-->
 	<repositories>
 		<repository>
 			<id>jboss-maven2-release-repository</id>
 			<name>jboss repository</name>
 			<url>http://repository.jboss.org/maven2/</url>
+			<releases>
+				<enabled>true</enabled>
+			</releases>
+			<snapshots>
+				<enabled>true</enabled>
+			</snapshots>
 		</repository>
 	</repositories>
+
+
+	<distributionManagement>
+		<repository>
+			<id>cent</id>
+			<name></name>
+			<url></url>
+		</repository>
+		<snapshotRepository>
+			<id>sssss</id>
+			<name></name>
+			<url></url>
+		</snapshotRepository>
+	</distributionManagement>
+
 
 
 	<build>
