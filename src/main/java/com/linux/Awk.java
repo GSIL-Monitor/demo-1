@@ -85,6 +85,7 @@ ORS        输出的记录分隔符，默认为换行符,即处理结果也是�
 */
 
 
+import org.springframework.util.NumberUtils;
 
 /**
 print & $0
@@ -263,4 +264,11 @@ awk '/[2][7][7]星号/{print $0}' /etc/passwd                      //匹配包�
 
  */
 public class Awk {
+    public static void main(String[] args) {
+        //System.out.println(NumberUtils.parseNumber("1.535610182016E12",Long.class));
+        //System.out.println(org.apache.commons.lang3.math.NumberUtils.createLong("1.535610182016E12"));
+        double dou = 1.535610182016E12;
+        Double d = new Double(1.234);
+        System.out.println(d.longValue());
+    }
 }
