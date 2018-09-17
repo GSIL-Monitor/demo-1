@@ -52,6 +52,7 @@ public class Log4jListener implements ApplicationListener {
         /*String projectPath = FileUtil.getProjectPath();
         System.out.println("projectPath = " + projectPath);*/
         try {
+
             //将log4j拷贝至项目路径或者java命名所在目录下。需要准确了解new File()相对路径 相对的是哪个路径
             //将拷贝的文件删除
             File copyFile = new File("log4j.xml");

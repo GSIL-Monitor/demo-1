@@ -3,6 +3,7 @@ package com.utils;
 
 import java.io.File;
 import java.net.URL;
+import java.util.List;
 
 /**
  * @Author suosong
@@ -101,11 +102,63 @@ public abstract class FileUtil {
         return suffix;
     }
 
+    /**
+     * 统计目录的大小,只计算最小目录，比如 /usr/local    /usr/local/hadoop ，如果后者在范围内，前者就不会出现在统计结果中
+     *
+     * @param path
+     * @param minSize 最小，单位字节
+     * @param maxSize 最大，单位字节
+     * @return
+     *//*
+    public static boolean statisticDiskSize(String path, long minSize, long maxSize) {
+        File file = new File(path);
+        if (!file.exists()) throw new RuntimeException("该路径不存在");
+        if (!file.isFile()) {
+            for (File childDir : file.listFiles()) {
+                boolean isReachMax = statisticDiskSize(childDir.getPath(), maxSize, minSize);
+                if(isReachMax)
+            }
+        }
+        long dirSize = statisticDirectorySize(file);
+        if (dirSize >= minSize && dirSize <= maxSize) {
+            System.out.println("path=" + path + " size=" + dirSize / 1024 / 1024 + "");
+            return true;//已经达到
+        }
+    }
+*/
+
+    /**
+     * 查看目录的大小
+     *
+     * @param dir
+     * @return
+     */
+    public static long statisticDirectorySize(File dir, long minSize) {
+        if (!dir.exists()) return 0;
+        if (dir.isFile()) return dir.length();
+        long sum = 0;
+        for (File childDir : dir.listFiles()) {
+            sum += statisticDirectorySize(childDir, minSize);
+        }
+
+        if (sum >= minSize) {
+            System.out.println("path=" + dir.getPath() + "     " + sum / 1024 / 1024/1024 + "G");
+        }
+        return sum;
+    }
+
+
     public static void main(String[] args) {
 
 
-        System.out.println(getFileSuffix("/Users/peters.p"));
+        //System.out.println(getFileSuffix("/Users/peters.p"));
+        File file = new File("/Users/peter/suosong");
+        System.out.println(file.getTotalSpace());
+        System.out.println(file.getFreeSpace());
+        System.out.println(file.getUsableSpace());
 
+        statisticDirectorySize(new File("/Users/peter/youyuan"), 1024L * 1024 * 1024 );
 
+        //System.out.println(1024L*1024*1024*2);
     }
 }

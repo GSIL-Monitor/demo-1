@@ -52,7 +52,7 @@ package com.nginx;
 
         #gzip  on;
 
-        server {
+        server {                                   //虚拟主机，只所以叫这个名字，是因为在客户端浏览器看来，是一台主机。可以有多个虚拟主机。相当于起来了多个tomcat。就是一个nginx可以监听n个端口
             listen       80;
             server_name  localhost;
 
@@ -61,8 +61,8 @@ package com.nginx;
             #access_log  logs/host.access.log  main;                 //server 访问日志,main表示log_format的名字
 
             location / {                                             //默认访问的路径，
-                root   html;                                        //root是存放页面的路径,没有为什么，就是这么规定的
-                index  index.html index.htm;                         //如果不存在index.html的话，就访问index.htm
+                root   html;                                        //root是根的意思   后面的路径都是相对于nginx的安装路径
+                index  index.html index.htm;                         //index是指如果不敲路径，访问哪个页面（欢迎页面）。如果不存在index.html的话，就访问index.htm
             }
 
             #error_page  404              /404.html;                       //出现404后所访问的页面
@@ -71,7 +71,7 @@ package com.nginx;
             #
             error_page   500 502 503 504  /50x.html;                        //出现50x 后所访问的页面
             location = /50x.html {
-                root   html;                                                //如果location定义了文件（/50x.html,那么就不需要root下一行的index了）
+                root   html;                                                //如果location定义了文件
             }
 
             # proxy the PHP scripts to Apache listening on 127.0.0.1:80

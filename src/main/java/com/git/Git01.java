@@ -1,5 +1,7 @@
 package com.git;
 
+import java.util.Map;
+
 /**
  * @Author suosong
  * @Date 2018/8/28
@@ -105,4 +107,10 @@ package com.git;
 
  */
 public class Git01 {
+    public static void main(String[] args) {
+        String str = " sssssss";
+        System.out.println(str.split(",")[0]);
+        System.out.println(Long.parseLong("1245599090")%1);
+        //Map<Integer>
+    }
 }
