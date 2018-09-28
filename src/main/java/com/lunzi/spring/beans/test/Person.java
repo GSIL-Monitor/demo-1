@@ -1,4 +1,4 @@
-package com.lunzi.spring.beans;
+package com.lunzi.spring.beans.test;
 
 /**
  * @Author suosong

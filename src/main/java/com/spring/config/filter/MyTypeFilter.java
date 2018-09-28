@@ -1,4 +1,4 @@
-package com.spring.config;
+package com.spring.config.filter;
 
 import org.springframework.core.type.ClassMetadata;
 import org.springframework.core.type.classreading.MetadataReader;

@@ -104,7 +104,7 @@ FS=":"
 }
 {print $1}               //效果与awk -F":" '{print $1}'相同,只是分隔符使用FS在代码自身中指定
 
-awk 'BEGIN{X=0} /^$/{ X+=1 } END{print "I find",X,"blank lines."}' test
+awk 'BEGIN{X=0} /^$/{ X+=1 } END{print "I find",X,"blank lines."}' config
 I find 4 blank lines.
 ls -l|awk 'BEGIN{sum=0} !/^d/{sum+=$5} END{print "total size is",sum}'                    //计算文件大小
 total size is 17487

@@ -4,39 +4,39 @@ server:
 
 spring:
   datasource:
-    url: jdbc:mysql://47.98.237.224:3306/test
+    url: jdbc:mysql://47.98.237.224:3306/config
     username: root
     password: 123
     driver-class-name: com.mysql.jdbc.Driver
 
     #多数据源
     primary:
-      url: jdbc:mysql://47.98.237.224:3306/test
+      url: jdbc:mysql://47.98.237.224:3306/config
       username: root
       password: 123
       driver-class-name: com.mysql.jdbc.Driver
 
     secondary:
-      url: jdbc:mysql://47.98.237.224:3306/test
+      url: jdbc:mysql://47.98.237.224:3306/config
       username: root
       password: 123
       driver-class-name: com.mysql.jdbc.Driver
   #sba
-  boot:
-    admin:
-      client:
-        url: http://localhost:8091
+#  boot:
+#    admin:
+#      client:
+#        url: http://localhost:8091
 
 
 
 
 
 #spring secure     As with Spring Boot 2 most of the endpoints aren’t exposed via http by default, we expose all of them. For production you should carefully choose which endpoints to expose.
-management:
-  endpoints:
-    web:
-      exposure:
-        include: "*"
+#management:
+#  endpoints:
+#    web:
+#      exposure:
+#        include: "*"
 #  endpoint:
 #    health:
 #      show-details: ALWAYS

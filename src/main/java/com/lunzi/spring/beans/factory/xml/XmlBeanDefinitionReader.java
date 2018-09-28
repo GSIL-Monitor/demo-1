@@ -68,8 +68,6 @@ public class XmlBeanDefinitionReader implements BeanDefinitionReader {
                 }else if(isContextNameSpaceUri(nameSpaceUri)){
                     parseComponentElement(ele);
                 }
-
-
             }
 
         } catch (Exception e) {

@@ -5,6 +5,7 @@ import com.lunzi.spring.beans.factory.BeanCreationException;
 import com.lunzi.spring.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor;
 import com.lunzi.spring.beans.factory.config.*;
 import org.apache.commons.beanutils.BeanUtils;
+import org.springframework.beans.factory.NoSuchBeanDefinitionException;
 import org.springframework.util.ClassUtils;
 
 import java.lang.reflect.InvocationTargetException;
@@ -32,7 +33,9 @@ public class DefaultBeanFactory extends DefaultSingletonBeanRegistry implements 
     public Object getBean(String name) {
 
         BeanDefinition beanDefinition = this.getBeanDefinition(name);
-        if (beanDefinition == null) return null;
+        if (beanDefinition == null) {
+            return null;
+        }
         try {
             Object bean = null;
             String beanClassName = beanDefinition.getBeanClassName();
@@ -82,7 +85,7 @@ public class DefaultBeanFactory extends DefaultSingletonBeanRegistry implements 
     public Object resolveDependency(DependencyDescriptor dependencyDescriptor) throws ClassNotFoundException {
         Class classToMatch = dependencyDescriptor.getDependencyType();
         for (BeanDefinition bd : beanDefinitionMap.values()) {
-            resolveBeanClass(bd,this.getBeanClassLoader());//确保bd的beanClass属性是有值的
+            resolveBeanClass(bd, this.getBeanClassLoader());//确保bd的beanClass属性是有值的
             if (classToMatch.isAssignableFrom(bd.getBeanClass())) {//参数跟他一样，或者是其子类
                 return this.getBean(bd.getBeanName());
             }
@@ -90,8 +93,24 @@ public class DefaultBeanFactory extends DefaultSingletonBeanRegistry implements 
         return null;
     }
 
+    @Override
+    public Class getType(String beanName) throws NoSuchBeanDefinitionException {
+        BeanDefinition bd = this.getBeanDefinition(beanName);
+        if (bd == null) {
+            throw new NoSuchBeanDefinitionException("");
+        }
+        try {
+            this.resolveBeanClass(bd, this.beanClassLoader == null ? ClassUtils.getDefaultClassLoader() : this.beanClassLoader);
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+        return bd.getBeanClass();
+    }
+
     private void resolveBeanClass(BeanDefinition bd, ClassLoader beanClassLoader) throws ClassNotFoundException {
-        if(bd.hasBeanClass())return;
+        if (bd.hasBeanClass()) {
+            return;
+        }
         bd.resolveBeanClass(beanClassLoader);
     }
 
@@ -123,22 +142,24 @@ public class DefaultBeanFactory extends DefaultSingletonBeanRegistry implements 
     /**
      * 依赖注入,用了apache commons-beans包
      * spring源码中使用了专门的Convert类，比较复杂
-     *
+     * <p>
      * 1，进行autowired注入
      * 2，进行setter 注入
      *
      * @param beanDefinition
      */
     private void populate(Object bean, BeanDefinition beanDefinition) throws InvocationTargetException, IllegalAccessException {
-        for(BeanPostProcessor beanPostProcessor : this.beanPostProcessors){
-            if(beanPostProcessor instanceof AutowiredAnnotationBeanPostProcessor){
-                AutowiredAnnotationBeanPostProcessor processor = (AutowiredAnnotationBeanPostProcessor)beanPostProcessor;
-                processor.postProcessPropertyValues(bean,beanDefinition.getBeanName());
+        for (BeanPostProcessor beanPostProcessor : this.beanPostProcessors) {
+            if (beanPostProcessor instanceof AutowiredAnnotationBeanPostProcessor) {
+                AutowiredAnnotationBeanPostProcessor processor = (AutowiredAnnotationBeanPostProcessor) beanPostProcessor;
+                processor.postProcessPropertyValues(bean, beanDefinition.getBeanName());
             }
         }
 
         List<PropertyValue> propertyValueList = beanDefinition.getPropertyValues();
-        if (propertyValueList == null || propertyValueList.size() == 0) return;
+        if (propertyValueList == null || propertyValueList.size() == 0) {
+            return;
+        }
         for (PropertyValue propertyValue : propertyValueList) {
             String propertyName = propertyValue.getName();
             Object value = propertyValue.getValue();

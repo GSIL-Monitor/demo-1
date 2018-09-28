@@ -9,6 +9,7 @@ import com.lunzi.spring.beans.factory.support.DefaultBeanFactory;
 import com.lunzi.spring.beans.factory.xml.XmlBeanDefinitionReader;
 import com.lunzi.spring.context.ApplicationContext;
 import com.lunzi.spring.core.io.Resource;
+import org.springframework.beans.factory.NoSuchBeanDefinitionException;
 import org.springframework.util.ClassUtils;
 
 /**
@@ -44,6 +45,11 @@ public abstract class AbstractApplicationContext implements ApplicationContext {
         return factory.getBean(name);
     }
 
+
+    @Override
+    public Class getType(String beanName) throws NoSuchBeanDefinitionException {
+        return this.factory.getType(beanName);
+    }
 
     //接口继承有点不顺
     public ClassLoader getBeanClassLoader() {

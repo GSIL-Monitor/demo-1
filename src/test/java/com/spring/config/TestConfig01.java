@@ -1,7 +1,6 @@
-package com.interview.spring.test;
+package com.spring.config;
 
 import com.spring.bean.Person;
-import com.spring.config.Config01;
 import org.junit.Test;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
@@ -10,7 +9,7 @@ import org.springframework.context.annotation.AnnotationConfigApplicationContext
  * @Author suosong
  * @Date 2018/8/14
  */
-public class Test01 {
+public class TestConfig01 {
 
     /**
      * 测试spring容器初始化时，有哪些默认的bean加到容器中了

@@ -16,24 +16,22 @@
             http://www.springframework.org/schema/tx/spring-tx.xsd
             http://www.springframework.org/schema/aop
             http://www.springframework.org/schema/aop/spring-aop.xsd "
-       >
+>
 
-<bean name="person" class="com.example.other.test01.Chinese">
-        <property name="account" ref="account"></property>
-        <property name="userName" value="xiaoming"></property>
-    </bean>
+    <bean name="person" class="com.lunzi.spring.beans.test.Person"></bean>
+    <bean name="txManager" class="com.lunzi.spring.beans.test.TransactionManager"></bean>
+    <aop:config>
+        <!--切面（一个类，一坨代码）-->
+        <aop:aspect ref="txManager">
+            <!--切点（在哪里执行）-->
+            <aop:pointcut id="savePerson" expression="execution(* com.lunzi.spring.beans.test.Person.save(..))"></aop:pointcut>
+            <!--之前，之后等执行-->
+            <aop:before pointcut-ref="savePerson" method="start"></aop:before>
+            <aop:after-returning pointcut-ref="savePerson" method="commit"></aop:after-returning>
+            <aop:after-throwing pointcut-ref="savePerson" method="rollback"></aop:after-throwing>
+        </aop:aspect>
 
-    <bean name="account" class="com.example.other.test01.Account"></bean>
 
-    <bean name="japanese" class="com.example.other.test01.Japanese" scope="prototype"/>
-
-
-    <bean name="cat" class="com.example.other.test01.Cat">
-        <constructor-arg name="account" ref="account"></constructor-arg>
-        <constructor-arg name="name" value="花花"></constructor-arg>
-        <constructor-arg name="age" value="30"></constructor-arg>
-    </bean>
-
-    <context:component-scan base-package="com.example"></context:component-scan>
+    </aop:config>
 
 </beans>

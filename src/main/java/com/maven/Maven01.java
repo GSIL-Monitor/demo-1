@@ -20,7 +20,7 @@ package com.maven;
  scope原理
     在maven中，有三种classpath， 编译主代码classpath，运行主代码classpath，编译和运行测试代码classpath。针对于这三种classpath，有几种scope。分别是
     compile:      默认的，对于以上三种classpath都有效
-    test:         只对编译和运行测试代码classpath有效（src/test/java下的代码）
+    config:         只对编译和运行测试代码classpath有效（src/config/java下的代码）
     provided:     对于编译classpath跟测试classpath有效，对于运行classpath无效，典型的是servlet-api jar包，因为运行的时候tomcat已经提供了
     runtime:      对运行classpath跟测试classpath有效，对于编译classpath无效。典型的是jdbc-mysql包.
     system:       对于三种classpath的关系，跟provided一样，唯一的区别就是必须通过systemPath元素显示的指定依赖文件的路径。
@@ -31,11 +31,11 @@ package com.maven;
  传递性依赖
     把A依赖，记为A->B,  如果A->B  B->C  那么A->C 这个叫传递性依赖。因为有scope的存在，所以传递性依赖也分了很多种情况。
     把A->B 叫做第一直接依赖  B->C 叫做第二直接依赖。 下面的表哥中，第一列为第一直接依赖scope，第一行第二直接依赖scope。
-                        compile         runtime         test        provided
+                        compile         runtime         config        provided
 
     compile             compile         runtime
     runtime             runtime         runtime
-    test                test            test
+    config                config            config
     provided            provided        provided                    provided
 
 
