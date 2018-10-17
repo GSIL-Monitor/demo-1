@@ -48,25 +48,25 @@ public class Log4jListener implements ApplicationListener {
 
         System.setProperty("log4j.path", log4jPath);
         //从类路径下取
-        InputStream inputStream = this.getClass().getClassLoader().getResourceAsStream("log4j.xml");
+        InputStream inputStream = this.getClass().getClassLoader().getResourceAsStream("log4j_back.xml");
         /*String projectPath = FileUtil.getProjectPath();
         System.out.println("projectPath = " + projectPath);*/
         try {
 
             //将log4j拷贝至项目路径或者java命名所在目录下。需要准确了解new File()相对路径 相对的是哪个路径
             //将拷贝的文件删除
-            File copyFile = new File("log4j.xml");
+            File copyFile = new File("log4j_back.xml");
             if (copyFile.exists()) {
                 copyFile.delete();
             }
-            FileUtils.copyInputStreamToFile(inputStream, new File("log4j.xml"));
+            FileUtils.copyInputStreamToFile(inputStream, new File("log4j_back.xml"));
         } catch (IOException e) {
             e.printStackTrace();
         } finally {
             IOUtils.closeQuietly(inputStream);
         }
 
-        DOMConfigurator.configure("log4j.xml");
+        DOMConfigurator.configure("log4j_back.xml");
         //DOMConfigurator.
     }
 
