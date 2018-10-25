@@ -22,8 +22,8 @@ import java.io.InputStream;
  * @Date 2018/8/7
  */
 @Component
-public class Log4jListener implements ApplicationListener {
-    @Override
+public class Log4jListener /*implements ApplicationListener*/ {
+    //@Override
     public void onApplicationEvent(ApplicationEvent event) {
         // 容器启动完成之后load
         if (event instanceof ContextRefreshedEvent) {
