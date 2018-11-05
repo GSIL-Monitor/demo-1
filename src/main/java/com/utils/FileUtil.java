@@ -157,7 +157,7 @@ public abstract class FileUtil {
         System.out.println(file.getFreeSpace());
         System.out.println(file.getUsableSpace());
 
-        statisticDirectorySize(new File("/Users/peter/youyuan"), 1024L * 1024 * 1024 );
+        statisticDirectorySize(new File("/Users/peter/suosong"), 1024L * 1024 * 1024 );
 
         //System.out.println(1024L*1024*1024*2);
     }

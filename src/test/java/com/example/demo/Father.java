@@ -16,4 +16,8 @@ public class Father {
     public Mother getMother() {
         return mother;
     }
+
+    public static void main(String[] args) {
+        System.out.println(7 * 24 * 60 * 60 * 1000);
+    }
 }

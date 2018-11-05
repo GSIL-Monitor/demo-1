@@ -18,6 +18,11 @@ import java.util.Random;
  * alter table table_name drop index index_name;
  * 增加索引：
  * alter table table_name add [unique]index index_name(field1,field2...);
+ * create index idx_user_name on user(name);
+ *
+ * 查找索引
+ * show index from table_name;
+ *
  */
 public class MysqlOperation {
 
