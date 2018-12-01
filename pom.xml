@@ -48,6 +48,9 @@
 			<artifactId>spring-boot-starter-aop</artifactId>
 		</dependency>
 
+
+
+
 		<!--
 			spring boot config
 		-->
@@ -222,7 +225,19 @@
 		</dependency>
 
 
+		<dependency>
+			<groupId>com.alibaba</groupId>
+			<artifactId>fastjson</artifactId>
+			<version>1.2.47</version>
+			<scope>compile</scope>
+		</dependency>
 
+
+		<dependency>
+			<groupId>org.apache.rocketmq</groupId>
+			<artifactId>rocketmq-client</artifactId>
+			<version>4.2.0</version>
+		</dependency>
 
 	</dependencies>
 

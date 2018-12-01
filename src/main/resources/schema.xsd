@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!--所有的schema文档其根元素必须叫做schema,命名空间url必须是下面的值。但是xs是可以随便换的，就是起个名字而已，关键是值不能变-->
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+           targetNamespace="http://suosong/schema"><!--这这个文件中自定义的元素或者数据类型属于targetNamespace命名空间-->
+
+
+    <xs:element name="book">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="cat" type="xs:int"></xs:element>
+                <xs:element name="dog" type="xs:string"></xs:element>
+            </xs:sequence>
+            <xs:attribute name="author" type="xs:string" use="required"></xs:attribute>
+            <xs:attribute name="price" type="xs:double"></xs:attribute>
+        </xs:complexType>
+    </xs:element>
+</xs:schema>

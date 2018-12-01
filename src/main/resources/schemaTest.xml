@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<aa:book xmlns:aa= "http://suosong/schema" author="张三" price="3.56">
+    <cat>23</cat>
+    <dog>s</dog>
+</aa:book>
