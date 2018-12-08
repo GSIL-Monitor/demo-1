@@ -23,10 +23,10 @@ public class StreamApi {
     List<Integer> list ;
     @Before
     public void setup(){
-        list = Arrays.asList(1,2,3,4,5,6,7,8,9);
+        list = Arrays.asList(1,2,3,4,5,6,7,8,9,9);
     }
     /**
-      filter: 接收一个lamda，从流中排除某些元素,使用的是Prodicate接口
+      filter: 接收一个lamda，从流中选择符合条件的某些元素,使用的是Prodicate接口
      */
     @Test
     public void test_筛选(){
@@ -35,6 +35,48 @@ public class StreamApi {
         //使用的是Consumer接口，只有执行此语句时，延迟的流才开始流动
         stream.forEach(System.out::println);
     }
+
+
+    @Test
+    public void test_限制(){
+        list.stream().limit(3).forEach(System.out::println);
+    }
+
+    @Test
+    public void test_跳过(){
+        list.stream().skip(1).forEach(System.out::println);
+    }
+
+    /**
+     * 去重是通过对比hashCode 跟equals
+     */
+    @Test
+    public void test_去重(){
+        list.stream().distinct().forEach(System.out::println);
+    }
+
+
+    /**
+     * 传入一个lamda表达式，是Function
+     */
+    @Test
+    public void test_函数处理(){
+        list.stream().map(e-> 0-e).forEach(System.out::println);
+    }
+
+    /**
+     * 排序
+     * 自然排序
+     * 定制排序
+     *
+     */
+
+
+
+
+
+
+
 
     @Test
     public void test(){
