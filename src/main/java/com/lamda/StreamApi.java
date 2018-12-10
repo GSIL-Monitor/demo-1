@@ -25,7 +25,7 @@ public class StreamApi {
 
     @Before
     public void setup() {
-        list = Arrays.asList( 2, 3, 4, 5, 6, 7, 8, 9, 9);
+        list = Arrays.asList(2, 3, 4, 5, 6, 7, 8, 9, 9);
     }
 
     /**
@@ -90,8 +90,9 @@ public class StreamApi {
         b = list.stream().noneMatch((x) -> x < 0);
         System.out.println(b);
     }
+
     @Test
-    public void test_查找相关(){
+    public void test_查找相关() {
         //为了避免空指针，允许设置一个替代值
         Optional<Integer> optional = list.stream().findFirst();
         optional.orElse(0);
@@ -104,8 +105,11 @@ public class StreamApi {
         System.out.println(any.get());
         //总数，最大最小值
         long count = list.stream().count();
-        int max = list.stream().max();
-        int min = list.stream().min();
+        Optional<Integer> max = list.stream().max((x1, x2) -> x1.compareTo(x2));
+        Optional<Integer> min = list.stream().min((x1, x2) -> x1.compareTo(x2));
+        System.out.println("count=" + count);
+        System.out.println("max=" + max.get());
+        System.out.println("min=" + min.get());
     }
 
 
